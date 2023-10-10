@@ -4,7 +4,7 @@
 2206031864 - Ravie Hasan Abud <br>
 2206083451 - Arditheus Immanuel Hanfree <br>
 
-# nama web
+# Nama Web
 
 ## Deskripsi
 ## Fitur
