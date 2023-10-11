@@ -62,3 +62,6 @@ Kami menyediakan dan menganalisis lebih dari 100 buku untuk anda nilai dan juga 
     - Menelusuri Leaderboard
     - Menelusuri Readlists
     - Menelusuri profile user lain
+
+## 5. Dataset
+Menggunakan dataset .csv yang pada Drive kelas PBP
