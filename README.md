@@ -46,7 +46,7 @@ Kami menyediakan dan menganalisis lebih dari 100 buku untuk anda nilai dan juga 
 <hr>
 
 ## 4. Roles 
-1. Reader (Telah Login):
+1. *Reader* (Telah Login):
     - Menelusuri buku yang terdaftar
     - Menelusuri Leaderboards
     - Menelusuri Readlists
@@ -57,9 +57,7 @@ Kami menyediakan dan menganalisis lebih dari 100 buku untuk anda nilai dan juga 
     - Menandai (bookmark) dan/atau menyukai (like) buku
     - Menentukan top 3 buku pribadi
     - Mengelola readlist pribadi
-<br>
-
-2. Guest (Tidak Login):
+2. *Guest* (Tidak Login):
     - Menelusuri buku yang terdaftar
     - Menelusuri Leaderboard
     - Menelusuri Readlists
