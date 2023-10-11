@@ -6,7 +6,7 @@
 2206813662 - Daffa Al Fathan Zaki <br>
 
 # ReadNRate
-# Latar Belakang & Manfaat
+## Latar Belakang & Manfaat
 
 ## Deskripsi
 ## Fitur
