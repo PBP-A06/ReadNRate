@@ -4,7 +4,8 @@
 2206031864 - Ravie Hasan Abud <br>
 2206083451 - Arditheus Immanuel Hanfree <br>
 
-# Nama Web
+# ReadNRate
+# Latar Belakang & Manfaat
 
 ## Deskripsi
 ## Fitur
