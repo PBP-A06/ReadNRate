@@ -23,14 +23,13 @@ Kami menyediakan dan menganalisis lebih dari 100 buku untuk anda nilai dan juga 
 Menambahkan buku yang dipilih ke daftar buku yang telah dibaca user dan meminta rating user mengenai buku tersebut.
 
 ### **Bookmark, Like, Favorite**
-	Lacak buku-buku yang sedang Anda baca, sudah Anda baca, dan ingin Anda baca. Buat list khusus untuk diri sendiri, lihat buku mana saja yang sedang dibaca atau ingin dibaca di masa depan.
+Lacak buku-buku yang sedang Anda baca, sudah Anda baca, dan ingin Anda baca. Buat list khusus untuk diri sendiri, lihat buku mana saja yang sedang dibaca atau ingin dibaca di masa depan.
 
 ### **Readlist**
 Memperbolehkan user untuk menambahkan daftar bacaan sendiri seperti fitur “playlist” pada music player.
 
-### **Recommended For You **
-Temukan apakah sebuah buku sesuai dengan Anda berdasarkan ulasan komunitas kami.
-Cek rekomendasi buku yang disesuaikan dengan preferensi Anda. Mesin rekomendasi 
+### **Recommended For You**
+Temukan apakah sebuah buku sesuai dengan Anda berdasarkan ulasan komunitas kami. Cek rekomendasi buku yang disesuaikan dengan preferensi Anda. Mesin rekomendasi 
 
 ### **Leaderboard**
 Menunjukan buku-buku dengan rata-rata rating tertinggi sepanjang waktu.
