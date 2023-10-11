@@ -19,23 +19,23 @@ Misi kami adalah untuk membantu para pembaca menemukan buku yang mereka sukai da
 Kami menyediakan dan menganalisis lebih dari 100 buku untuk anda nilai dan juga memberikan saran yang disesuaikan dengan selera literasi Anda.
 
 ## Fitur/Modul
-**Review**
+### **Review**
 Menambahkan buku yang dipilih ke daftar buku yang telah dibaca user dan meminta rating user mengenai buku tersebut.
 
-**Bookmark, Like, Favorite**
+### **Bookmark, Like, Favorite**
 	Lacak buku-buku yang sedang Anda baca, sudah Anda baca, dan ingin Anda baca. Buat list khusus untuk diri sendiri, lihat buku mana saja yang sedang dibaca atau ingin dibaca di masa depan.
 
-**Readlist**
+### **Readlist**
 Memperbolehkan user untuk menambahkan daftar bacaan sendiri seperti fitur “playlist” pada music player.
 
-**Recommended For You **
+### **Recommended For You **
 Temukan apakah sebuah buku sesuai dengan Anda berdasarkan ulasan komunitas kami.
 Cek rekomendasi buku yang disesuaikan dengan preferensi Anda. Mesin rekomendasi 
 
-**Leaderboard**
+### **Leaderboard**
 Menunjukan buku-buku dengan rata-rata rating tertinggi sepanjang waktu.
 
-**Profile - History, Top 3 Books**
+### **Profile - History, Top 3 Books**
 Menampilkan seluruh buku yang telah dibaca oleh user dan juga 3 buku terbaik menurut user.
 
 ## Roles
