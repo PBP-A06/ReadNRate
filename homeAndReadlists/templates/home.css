@@ -1,0 +1,232 @@
+.landing-page {
+    background-color: #ffffff;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 100%;
+  }
+  
+  .landing-page .div {
+    background-color: #ffffff;
+    overflow: hidden;
+    width: 1920px;
+    height: 1080px;
+    position: relative;
+  }
+  
+  .landing-page .div-2 {
+    position: absolute;
+    width: 1920px;
+    height: 1214px;
+    top: 0;
+    left: 0;
+  }
+  
+  .landing-page .overlap-group {
+    position: relative;
+    height: 1080px;
+  }
+  
+  .landing-page .background-image {
+    position: absolute;
+    width: 1920px;
+    height: 943px;
+    top: 137px;
+    left: 0;
+    object-fit: cover;
+  }
+  
+  .landing-page .background {
+    position: absolute;
+    width: 1920px;
+    height: 1080px;
+    top: 0;
+    left: 0;
+    background-color: #3f3f3f;
+    mix-blend-mode: exclusion;
+  }
+  
+  .landing-page .content {
+    position: absolute;
+    width: 1723px;
+    height: 550px;
+    top: 181px;
+    left: 120px;
+  }
+  
+  .landing-page .text-wrapper {
+    position: absolute;
+    height: 30px;
+    top: 520px;
+    left: 1375px;
+    font-family: "Chivo-Black", Helvetica;
+    font-weight: 900;
+    color: #ffffff;
+    font-size: 25px;
+    text-align: center;
+    letter-spacing: 0;
+    line-height: normal;
+    white-space: nowrap;
+  }
+  
+  .landing-page .line {
+    position: absolute;
+    width: 1680px;
+    height: 2px;
+    top: 479px;
+    left: 0;
+  }
+  
+  .landing-page .welcome-back-user {
+    position: absolute;
+    width: 1236px;
+    top: 221px;
+    left: 26px;
+    font-family: "Almarai-Light", Helvetica;
+    font-weight: 300;
+    color: #ffffff;
+    font-size: 97px;
+    letter-spacing: 0;
+    line-height: normal;
+  }
+  
+  .landing-page .a-href-https-www {
+    position: absolute;
+    width: 42px;
+    height: 42px;
+    top: 0;
+    left: 1677px;
+    object-fit: cover;
+  }
+  
+  .landing-page .navbar {
+    position: fixed;
+    width: 1920px;
+    height: 137px;
+    top: 0;
+    left: 0;
+    background-color: #262626;
+    box-shadow: 0px 4px 12px 3px #0000004c;
+  }
+  
+  .landing-page .user {
+    position: absolute;
+    width: 328px;
+    height: 53px;
+    top: 42px;
+    left: 1562px;
+  }
+  
+  .landing-page .overlap-group-2 {
+    position: relative;
+    width: 326px;
+    height: 53px;
+  }
+  
+  .landing-page .profile-icon {
+    position: absolute;
+    width: 47px;
+    height: 45px;
+    top: 7px;
+    left: 0;
+    object-fit: cover;
+  }
+  
+  .landing-page .user-username {
+    position: absolute;
+    width: 314px;
+    height: 53px;
+    top: 0;
+    left: 12px;
+    font-family: "Chivo-Bold", Helvetica;
+    font-weight: 700;
+    color: #ffffff;
+    font-size: 25px;
+    text-align: center;
+    letter-spacing: 0;
+    line-height: normal;
+  }
+  
+  .landing-page .logo-header {
+    position: absolute;
+    width: 376px;
+    height: 108px;
+    top: 20px;
+    left: 31px;
+  }
+  
+  .landing-page .overlap {
+    position: relative;
+    width: 373px;
+    height: 108px;
+  }
+  
+  .landing-page .readnrate-logo {
+    position: absolute;
+    width: 291px;
+    top: 18px;
+    left: 82px;
+    -webkit-text-stroke: 0.82px #696969;
+    font-family: "Inter-Bold", Helvetica;
+    font-weight: 700;
+    color: #ffffff;
+    font-size: 41.2px;
+    letter-spacing: 0;
+    line-height: normal;
+  }
+  
+  .landing-page .img {
+    position: absolute;
+    width: 115px;
+    height: 108px;
+    top: 0;
+    left: 0;
+    object-fit: cover;
+  }
+  
+  .landing-page .navbar-buttons {
+    position: absolute;
+    width: 792px;
+    height: 38px;
+    top: 49px;
+    left: 564px;
+  }
+  
+  .landing-page .BOOKS-button {
+    position: absolute;
+    width: 98px;
+    height: 36px;
+    top: 0;
+    left: 0;
+  }
+  
+  .landing-page .text-wrapper-2 {
+    position: absolute;
+    height: 36px;
+    top: 0;
+    left: 0;
+    font-family: "Cocogoose-Regular", Helvetica;
+    font-weight: 400;
+    color: #97a8b9;
+    font-size: 25px;
+    text-align: center;
+    letter-spacing: 0;
+    line-height: normal;
+  }
+  
+  .landing-page .LEADERBOARD-button {
+    position: absolute;
+    width: 200px;
+    height: 36px;
+    top: 2px;
+    left: 594px;
+  }
+  
+  .landing-page .READLISTS-button {
+    position: absolute;
+    width: 148px;
+    height: 36px;
+    top: 0;
+    left: 256px;
+  }
+  
