@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class BookmarksandlikesConfig(AppConfig):
+class homeAndReadlists(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'bookmarksAndLikes'
+    name = 'homeAndReadlists'
