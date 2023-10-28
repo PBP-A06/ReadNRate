@@ -6,5 +6,4 @@ from book.models import Book
 
 def get_books(request):
     data = Book.objects.all()
-    data_json = serializers.serialize("json", data)
-    return HttpResponse(data_json, content_type="application/json")
+    return HttpResponse(serializers.serialize("json", data), content_type="application/json")
