@@ -8,29 +8,31 @@
 
 {% block content %}
     <div style="text-align: center;">
-        <h2>Which sorting method would you like for the Leaderboard?</h2>
-        
-        <button id="likes" onclick="refreshBooks('likes')">
-            Sort by Likes
-        </button>
+        <p>Which sorting method would you like for the Leaderboard?        
+            <button id="likes" onclick="refreshBooks('likes')">
+                Sort by Likes
+            </button>
 
-        <button id="rating" onclick="refreshBooks('rating')">
-            Sort by Rating
-        </button>
-
-        <button id="readlist" onclick="refreshBooks('readlist')">
-            Sort by Readlist
-        </button>
-    </div>
+            <button id="rating" onclick="refreshBooks('rating')">
+                Sort by Rating
+            </button>
     
-    <hr>
+            <button id="readlist" onclick="refreshBooks('readlist')">
+                Sort by Readlist
+            </button>
+        </p>
+    </div>
 
-    <div id="book_cards" ></div>
+    <div id="book_cards"></div>
 
     <script>
         async function getBooks() {
-            return fetch("{% url 'book:get_books' %}").then((res) => res.json());
+            return fetch("{% url 'get_books' %}").then((res) => res.json());
         }
+
+        // async function getReadlists() {
+        //     return fetch("{...... url 'get_readlists' ....}").then((res) => res.json());
+        // }
 
         // sort by stars. if the stars is equal => ascending by title
         function compareByRating(a, b) {
@@ -40,58 +42,73 @@
             return a.fields.stars - b.fields.stars;
         }
 
-        // sort by category. if equals => ascending by title
-        function compareByCategory(a, b) {
-            if (a.fields.category.match(b.fields.category)) {
-                return a.fields.title.localeCompare(b.fields.title);
+        // sort by likes. if the likes is equal => ascending by title
+        function compareByLikes(a, b) {
+            if (a.fields.likes == b.fields.likes) {
+                return b.fields.title.localeCompare(a.fields.title);
             }
-            return a.fields.category.localeCompare(b.fields.category);
+            return a.fields.likes - b.fields.likes;
         }
 
-        // sort ascending by title
-        function compareByTitle(a, b) { 
-            return a.fields.title.localeCompare(b.fields.title);
-        }
+        // // sort by category. if equals => ascending by title
+        // function compareByCategory(a, b) {
+        //     if (a.fields.category.match(b.fields.category)) {
+        //         return a.fields.title.localeCompare(b.fields.title);
+        //     }
+        //     return a.fields.category.localeCompare(b.fields.category);
+        // }
+
+        // // sort ascending by title
+        // function compareByTitle(a, b) { 
+        //     return a.fields.title.localeCompare(b.fields.title);
+        // }
     
+        // only show top 10 book and readlist
         async function refreshBooks(param) {
-            document.getElementById("book_cards").innerHTML = "";
-            const books = await getBooks();            
-            let htmlString = ``;
-            if (param.match("start")) { // initial (NNT HAPUS, biar keliatan aj bedanya)
-                htmlString += `<h2>Here are our books:</h2>`;
-                books.sort(compareByTitle);
-            } else if (param.match("likes")) {
-                books.sort(compareByRating); // NNT GANTI JD LIKE BOOKNYA
-                books.reverse();
-                htmlString += `\n<p>Leaderboard is currently sorted by: <b>Likes</b></p>`;
-            } else if (param.match("rating")) {
-                books.sort(compareByRating);
-                books.reverse();
-                htmlString += `\n<p>Leaderboard is currently sorted by: <b>Rating (stars)</b></p>`;
-            } else if (param.match("readlist")) {
-                books.sort(compareByRating); // NNT GANTI JD LIKE READLISTNYA
-                books.reverse();
-                htmlString += `\n<p>Leaderboard is currently sorted by: <b>Readlist Likes</b></p>`;
+            document.getElementById("book_cards").innerHTML = "";           
+            let htmlString = `<h1 style="text-align: center; margin-bottom: 2px;">Leaderboard</h1>`;
+
+            if (param.match("readlist")) {
+                // const readlists = await getReadlists(); 
+                // readlists.sort(compareByLikes); // NNT GANTI JD LIKE READLISTNYA
+                // readlists.reverse();
+                // htmlString += `\n<p style="text-align: center; margin-top: 0px;"><i>is currently sorted by <b>Readlist Likes</b></i></p>`;
+                // HANDLE READLIST
+            
+            } else {
+                const books = await getBooks();
+                if (param.match("likes")) {
+                    htmlString += `\n<p style="text-align: center; margin-top: 0px;"><i>is currently sorted by <b>Likes</b></i></p>`;
+                    books.sort(compareByLikes);
+                    books.reverse();
+                } else if (param.match("rating")) {
+                    htmlString += `\n<p style="text-align: center; margin-top: 0px;"><i>is currently sorted by <b>Rating (stars)</b></i></p>`;
+                    books.sort(compareByRating);
+                    books.reverse();
+                }
+                htmlString += `\n<ul>`;
+                // show top 10 books only
+                for (let i = 0; i < 10; i++) {
+                    book = books[i];
+                    htmlString += `\n
+                        Top ${i+1}:
+                        <li>Title: ${book.fields.title}</li>
+                        <li>Category: ${book.fields.category}</li>
+                        <li>Number of reviews: ${book.fields.number_of_reviews}</li>
+                        <li>Rating: ${book.fields.stars}</li>
+                        <li>Likes: ${book.fields.likes}</li>
+                        <li>Description: ${book.fields.book_description}</li>
+                        <li>
+                            Cover: 
+                            <br>
+                            <img src="${book.fields.image_link}" alt="Cover for ${book.fields.title}" style="width: 150px;">
+                        </li>
+                        <br>`;
+                }
+                htmlString += `\n</ul>`;
             }
-            htmlString += `\n<ul>`;
-            books.forEach((book) => {
-                htmlString += `\n
-                <li>Title: ${book.fields.title}</li>
-                <li>Category: ${book.fields.category}</li>
-                <li>Number of reviews: ${book.fields.number_of_reviews}</li>
-                <li>Description: ${book.fields.number_of_reviews}</li>
-                <li>Rating: ${book.fields.stars}</li>
-                <li>
-                    Cover: 
-                    <br>
-                    <img src="${book.fields.image_link}" alt="Cover for {{book.title}}" style="width: 150px;">
-                </li>
-                <br>` 
-            });
-            htmlString += `\n</ul>`;
             document.getElementById("book_cards").innerHTML = htmlString;
         }
-        
-        refreshBooks("start"); // NANTI HAPUS
+        refreshBooks("rating"); // Defaultnya by rating
     </script>
 {% endblock content %}

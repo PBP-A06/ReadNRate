@@ -8,3 +8,7 @@ class Book(models.Model):
     book_description = models.TextField(null=True, blank=True)
     image_link = models.TextField(null=True, blank=True)
     stars = models.IntegerField(null=True, blank=True)
+    likes = models.IntegerField(default=0)
+
+    def __str__(self):
+        return self.title
