@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Detail Buku</title>
+</head>
+<body>
+    <img src="{{ book.image_link }}" alt="{{ book.title }}" width="200" height="300">
+    <h1>{{ book.title }}</h1>
+    <p>{{ book.book_description }}</p>
+
+    <button id="bookmark-button" data-book="{{ book.id }}">Bookmark</button>
+    <button id="like-button" data-book="{{ book.id }}">Like</button>
+
+    <button id="review-button">Review</button>
+
+    <div id="review-form" style="display: none;">
+        <form id="review-form" method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button id="submit-review" type="submit">Submit</button>
+        </form>
+    </div>
+
+    <div id="reviews">
+        {% for review in reviews %}
+            <p>{{ review.user.username }} rated it {{ review.rating }}/5</p>
+            <p>{{ review.review_text }}</p>
+        {% endfor %}
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            // Handle bookmark action
+            $('#bookmark-button').click(function () {
+                // Implement your bookmark logic here
+            });
+
+            // Handle like action
+            $('#like-button').click(function () {
+                // Implement your like logic here
+            });
+
+            // Handle review button
+            $('#review-button').click(function () {
+                $('#review-form').show();
+            });
+        });
+    </script>
+</body>
+</html>
