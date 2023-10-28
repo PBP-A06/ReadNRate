@@ -4,5 +4,7 @@ from leaderboard.views import *
 
 urlpatterns = [
     # path('admin/', admin.site.urls),
-    path('', leaderboad_option, name='leaderboad_option'),
+    path('', leaderboard_option, name='leaderboard_option'),
+    path("get-books", get_books, name="get_books")
+    # path("get-readlists", get_readlists, name="get_readlists")
 ]
