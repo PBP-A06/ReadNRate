@@ -2,28 +2,33 @@
 
 {% block meta %}
     <style>
-        
+
     </style>
 {% endblock meta %}
 
 {% block content %}
-    <div style="text-align: center;">
-        <p>Which sorting method would you like for the Leaderboard?        
-            <button id="likes" onclick="refreshBooks('likes')">
-                Sort by Likes
+    <div class="text-white my-5 mx-3 text-center">
+        <p id="sorting" class="text-5xl text-center mb-0">Leaderboard by Rating (stars)</p>
+        
+        <p class="mt-3">Which sorting method would you like for the Leaderboard?        
+            <button id="likes" onclick="refreshBooks('likes')"  
+            class="bg-gray-600 hover:bg-gray-700 text-white h-8 font-bold py-1 px-3 rounded-full">
+                Likes
             </button>
 
-            <button id="rating" onclick="refreshBooks('rating')">
-                Sort by Rating
+            <button id="rating" onclick="refreshBooks('rating')"
+            class="bg-gray-600 hover:bg-gray-700 text-white h-8 font-bold py-1 px-3 rounded-full">
+                Rating
             </button>
     
-            <button id="readlist" onclick="refreshBooks('readlist')">
-                Sort by Readlist
+            <button id="readlist" onclick="refreshBooks('readlist')"
+            class="bg-gray-600 hover:bg-gray-700 text-white h-8 font-bold py-1 px-3 rounded-full">
+                Readlist
             </button>
         </p>
     </div>
 
-    <div id="book_cards"></div>
+    <div id="book_cards" class="text-white mx-3"></div>
 
     <script>
         async function getBooks() {
@@ -66,23 +71,23 @@
         // only show top 10 book and readlist
         async function refreshBooks(param) {
             document.getElementById("book_cards").innerHTML = "";           
-            let htmlString = `<h1 style="text-align: center; margin-bottom: 2px;">Leaderboard</h1>`;
+            let htmlString = ``;
 
             if (param.match("readlist")) {
                 // const readlists = await getReadlists(); 
                 // readlists.sort(compareByLikes); // NNT GANTI JD LIKE READLISTNYA
                 // readlists.reverse();
-                // htmlString += `\n<p style="text-align: center; margin-top: 0px;"><i>is currently sorted by <b>Readlist Likes</b></i></p>`;
+                // document.getElementById("book_cards").innerHTML = `\n<p class="text-center mt-0"><i>is currently sorted by <b>Readlist Likes</b></i></p>`;
                 // HANDLE READLIST
             
             } else {
                 const books = await getBooks();
                 if (param.match("likes")) {
-                    htmlString += `\n<p style="text-align: center; margin-top: 0px;"><i>is currently sorted by <b>Likes</b></i></p>`;
+                    document.getElementById("sorting").innerHTML = `\n<p class="text-center mt-0 text-5xl mb-0">Leaderboard by Likes</p>`;
                     books.sort(compareByLikes);
                     books.reverse();
                 } else if (param.match("rating")) {
-                    htmlString += `\n<p style="text-align: center; margin-top: 0px;"><i>is currently sorted by <b>Rating (stars)</b></i></p>`;
+                    document.getElementById("sorting").innerHTML = `\n<p class="text-center mt-0 text-5xl mb-0">Leaderboard by Rating (stars)</p>`;
                     books.sort(compareByRating);
                     books.reverse();
                 }
