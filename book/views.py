@@ -9,4 +9,4 @@ def show_books(request):
     context = {
         'books':books,
     }
-    return render(request, "all-books.html", context)
+    return render(request, "books.html", context)
