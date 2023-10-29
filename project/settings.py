@@ -47,7 +47,6 @@ INSTALLED_APPS = [
     'home',
     'books',
     'book',
-    'homeAndReadlists',
     'leaderboard',
 ]
 
