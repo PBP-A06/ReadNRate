@@ -5,11 +5,13 @@ from django.contrib.auth.models import User
 
 class Book(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    title = models.CharField(max_length=255)
-    author = models.CharField(max_length=255)
-    publication_date = models.DateField(null=True, blank=True)
-    genre = models.CharField(max_length=50, blank=True)
-    description = models.TextField(blank=True)
+    title = models.TextField(null=True, blank=True)
+    category = models.TextField(null=True, blank=True)
+    number_of_reviews = models.IntegerField(null=True, blank=True)
+    book_description = models.TextField(null=True, blank=True)
+    image_link = models.TextField(null=True, blank=True)
+    stars = models.IntegerField(null=True, blank=True)
+    likes = models.IntegerField(default=0)
 
     def __str__(self):
         return self.title
