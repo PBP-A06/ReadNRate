@@ -18,30 +18,33 @@
         <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400&display=swap" rel="stylesheet">
     </head>
 
-    <body class="font-[Almarai] bg-gradient-to-t from-[#97A8B9] to-sky-950 h-screen">
+    <!-- <body class="font-[Almarai] bg-gradient-to-t from-[#97A8B9] to-sky-950 h-screen"> -->
     <!-- <body class="font-[Almarai] bg-sky-950"> -->
-    <!-- <body class="font-[Almarai] bg-zinc-900"> -->
-        <header class="bg-[#272727]">
-            <nav class="flex justify-between items-center w-[92%]  mx-auto">
+    <body class="font-[Almarai] bg-zinc-900 m-0">
+        <!-- <header class="bg-[#272727]"> -->
+        <header class="bg-zinc-800">
+            <nav class="flex justify-between items-center w-[92%] mx-auto py-2">
                 <div>
-                    <img class="w-16 cursor-pointer" src="logolong.png" alt="ReadNRateLogo">
+                    <a href="{% url 'show_main' %}">
+                        <img class="w-16 cursor-pointer text-white" src="logolong.png" alt="ReadNRateLogo">
+                    </a>
                 </div>
                 <div
                     class="nav-links duration-500 md:static absolute  md:min-h-fit min-h-[60vh] left-0 top-[-100%] md:w-auto  w-full flex items-center px-5">
                     <ul class="flex md:flex-row flex-col md:items-center md:gap-[4vw] gap-8">
                         <li>
-                            <a class="text-slate-400 font-normal font-['Cocogoose']" href="#">BOOKS</a>
+                            <a class="text-slate-400 font-normal font-['Cocogoose']" href="{% url 'book:show_books' %}">BOOKS</a>
                         </li>
                         <li>
                             <a class="text-slate-400 font-normal font-['Cocogoose']" href="#">READLISTS</a>
                         </li>
                         <li>
-                            <a class="text-slate-400 font-normal font-['Cocogoose']" href="#">LEADERBOARD</a>
+                            <a class="text-slate-400 font-normal font-['Cocogoose']" href="{% url 'leaderboard_option' %}">LEADERBOARD</a>
                         </li>
                     </ul>
                 </div>
                 <div class="flex items-center gap-6">
-                    <button class="bg-[#3CB81D] text-white h-9 px-4 py-1 rounded-full hover:bg-lime-900">Sign In</button>
+                    <button class="bg-gray-300 text-black h-9 px-4 py-1 rounded-full hover:bg-gray-400">Sign In</button>
                     <ion-icon onclick="onToggleMenu(this)" name="menu" class="text-3xl cursor-pointer md:hidden"></ion-icon>
                 </div>
          </header>
