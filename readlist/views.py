@@ -35,7 +35,7 @@ def create_readlist(request):
             readlist.user = request.user
             readlist.save()
             form.save_m2m()  # This is needed to save the many-to-many relationship
-            return JsonResponse({'status':'success', 'message':'Readlist created successfully'})
+            return render(request, 'create_readlist.html', {'form': form})
     else:
         form = AddBooksToReadlistForm()
     return render(request, 'create_readlist.html', {'form': form})

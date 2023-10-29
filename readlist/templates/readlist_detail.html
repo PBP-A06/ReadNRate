@@ -18,7 +18,7 @@
 
     <script>
         async function getBooks() {
-            return fetch("{% url 'readlist_detail' readlist.id%}").then((res) => res.json());
+            return fetch("{% url 'readlist_detail' readlist.id %}").then((res) => res.json());
         }
 
         // sort by category. if equals => ascending by title
