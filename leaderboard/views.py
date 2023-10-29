@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from book.models import Book
-# from readlist.models import Readlist
+from readlist.models import Readlist
+# from readlist.views import *
 from django.core import serializers
 from django.http import HttpResponse, HttpResponseRedirect, HttpResponseNotFound
 from django.views.decorators.csrf import csrf_exempt
@@ -18,11 +19,7 @@ def leaderboard_option(request):
 @csrf_exempt
 def get_books(request):
     data = Book.objects.all()
-    return HttpResponse(serializers.serialize("json", data), content_type="application/json")
-
-# def get_readlists(request):
-#     data = Readlist.objects.all()
-#     return HttpResponse(serializers.serialize("json", data), content_type="application/json") 
+    return HttpResponse(serializers.serialize("json", data), content_type="application/json") 
 
 @csrf_exempt
 def show_book_by_id(request, pk):
@@ -30,4 +27,19 @@ def show_book_by_id(request, pk):
     context = {
         'book':book,
     }
-    return render(request, "details.html", context)
+    return render(request, "details-book.html", context)
+
+@csrf_exempt
+def get_readlists(request):
+    readlists = Readlist.objects.all()
+    return HttpResponse(serializers.serialize("json", readlists), content_type="application/json") 
+
+@csrf_exempt
+def show_readlist_by_id(request, pk):
+    readlist = Readlist.objects.filter(pk=pk)[0]
+    books = readlist.books.all()
+    context = {
+        'readlist':readlist,
+        'books':books,
+    }
+    return render(request, "details-readlist.html", context)
