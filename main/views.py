@@ -1,10 +1,13 @@
 from django.shortcuts import render
+from book.models import Book
+from django.core import serializers
+from django.http import HttpResponse
+from django.views.decorators.csrf import csrf_exempt
 
-# Create your views here.
+@csrf_exempt
 def show_main(request):
-
+    books = Book.objects.all()
     context = {
-        'test':'testing'
+        'books':books,
     }
-
     return render(request, "main.html", context)

@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'book',
     'homeAndReadlists',
     'leaderboard',
+    'user_profile',
 ]
 
 MIDDLEWARE = [
