@@ -11,16 +11,3 @@ def show_main(request):
         'books':books,
     }
     return render(request, "main.html", context)
-
-@csrf_exempt
-def show_books(request):
-    books = Book.objects.all()
-    context = {
-        'books':books,
-    }
-    return render(request, "books.html", context)
-
-@csrf_exempt
-def get_books(request):
-    books = Book.objects.all()
-    return HttpResponse(serializers.serialize("json", books), content_type="application/json")
