@@ -2,15 +2,15 @@
 
 {% block content %}
     <div class="text-white my-5 mx-3 text-center">
-        <p id="sorting" class="text-5xl text-center mb-0">Bookmarks</p>
+        <p id="sorting" class="text-5xl text-center mb-0">Bookmarks and Likes</p>
     </div>
     
     <div id="book_cards" class="text-white mx-3"></div>
 
     <script>
         // ajax get
-        async function showBookmarked() {
-            return fetch("{% url 'show_bookmarked' %}").then((res) => res.json());
+        async function showProfile() {
+            return fetch("{% url 'show_profile' %}").then((res) => res.json());
         }
 
         // sort by stars. if the stars is equal => ascending by title
@@ -30,8 +30,8 @@
             let htmlString = `<div class="flex items-center justify-content-center container mx-auto my-8">
                 <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-5">`;
 
-            const books = await showBookmarked();
-            document.getElementById("sorting").innerHTML = `\n<p class="text-center mt-0 text-5xl mb-0">Leaderboard by Rating</p>`;
+            const books = await showProfile();
+            document.getElementById("sorting").innerHTML = `\n<p class="text-center mt-0 text-5xl mb-0">Sorted by Rating</p>`;
             books.sort(compareByRating);
             books.reverse();
             // show all bookmarks
@@ -63,7 +63,7 @@
         refreshBooks(); // Default = by rating
     </script>
 
-    <div class="text-white my-5 mx-3 text-center">
+    <!-- <div class="text-white my-5 mx-3 text-center">
         <p id="sorting" class="text-5xl text-center mb-0">Likes</p>
     </div>
     
@@ -123,5 +123,5 @@
         document.getElementById("book_cards").innerHTML = htmlString;
 
         refreshBooks(); // Default = by rating
-    </script>
+    </script> -->
 {% endblock content %}

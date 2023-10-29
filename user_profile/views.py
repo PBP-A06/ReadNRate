@@ -26,3 +26,13 @@ def show_liked(request):
         'books':books,
     }
     return render(request, "profile.html", context)
+
+@csrf_exempt
+def show_profile(request):
+    bookmarked = Book.objects.filter(bookmarked=True)
+    liked = Book.objects.filter(liked=True)
+    context = {
+        'bookmarked':bookmarked,
+        'liked':liked,
+    }
+    return render(request, "profile.html", context)
