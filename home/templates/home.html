@@ -2,9 +2,18 @@
 
 {% block content %}
 
-    <h1 class="w-[1236px] h-[231px] text-white text-[84px] font-light font-['Almarai'] pl-10 ml-40 mt-40 mb-0">Welcome back, {{ nama }}.</h1>
-    <h2 class="w-[1236px] h-[231px] text-white text-[60px] font-light font-['Almarai'] pl-10 ml-40 mt-0">Let's read!</h2>
-    <!-- <div class="w-[1000px] h-[0px] divider-vertical content-center"></div> -->
-    <div class="text-right text-white text-[25px] font-['Chivo']">YOUR RECENT REVIEWS</div>
+    <div class="text-white font-light font-['Almarai'] pl-10 ml-40 mt-40 mb-0">
+        <h1 class="w-[1236px] text-[84px]">
+            Welcome back, <u>{{ nama }}.</u>
+        </h1>
+        <h2 class="w-[1236px] text-[60px] mt-0">
+            Let's read!
+        </h2>
+    </div>
+    
+    <div class="items-center justify-center w-full">
+        <hr class="w-[1200px] h-1 my-8 bg-gray-200 border-0 rounded dark:bg-gray-700">
+        <div class="text-right text-white text-[25px] font-['Chivo'] mt-30">YOUR RECENT REVIEWS</div>
+    </div>
 
 {% endblock content %}

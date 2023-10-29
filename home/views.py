@@ -6,3 +6,4 @@ def show_home(request):
         'nama': 'test'
     }
     return render(request, "home.html" , context)
+
