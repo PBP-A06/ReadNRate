@@ -22,13 +22,12 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('home/', include('home.urls')),
     path('', include('main.urls')),
     path('leaderboard/', include('leaderboard.urls')),
     path('book/<int:id>/', include('bookReview.urls')),
     path('books/', include('book.urls')),
     path('readlist/', include('readlist.urls')),
-    # path('toggle_like/<int:id>/', toggle_like, name='toggle_like'),
-    # path('toggle_bookmark/', toggle_bookmark, name='toggle_bookmark'),
 ]
 
 # Serve media files during development

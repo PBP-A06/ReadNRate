@@ -7,15 +7,6 @@ from django.http import HttpResponse, JsonResponse, HttpResponseNotFound
 from django.core import serializers
 from django.views.decorators.csrf import csrf_exempt
 
-# @login_required
-# def book_detail(request, book_id):
-#     book = get_object_or_404(Book, id=book_id)
-#     context = {
-#         'book': book,
-#     }
-#     return render(request, "book_detail.html", context)
-
-
 def show_book_detail(request, id):
     book = get_object_or_404(Book, pk=id)
     reviews = Review.objects.filter(book=book)
@@ -36,6 +27,7 @@ def show_book_detail(request, id):
     context = {'book': book, 'reviews': reviews, 'form': form, 'bookId': id, 'has_liked': has_liked, 'total_likes': book.liked_by.count()}
     return render(request, 'book_detail.html', context)
 
+@login_required
 @csrf_exempt
 def add_review_ajax(request, id):
     if request.method == 'POST':
@@ -47,15 +39,18 @@ def add_review_ajax(request, id):
             review_text=review_text,
         )
 
-        return HttpResponse(b"CREATED", status=201)
+        return JsonResponse({'success': True, 'review_text': review_text})
     
-    return HttpResponseNotFound()
+    return JsonResponse({'success': False, 'error': 'Invalid request method'})
 
+
+@login_required
+@csrf_exempt
 def submit_review(request):
     if request.method == 'POST' and request.is_ajax():
         review_text = request.POST.get('review_text')
         book_id = request.POST.get('book_id')
-        review = Review(text=review_text, book_id=book_id)
+        review = Review(review_text=review_text, book_id=book_id)
         review.save()
 
         return JsonResponse({'success': True, 'review_text': review_text})

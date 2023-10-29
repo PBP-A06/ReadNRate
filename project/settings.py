@@ -44,8 +44,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'main',
+    'home',
+    'books',
     'book',
-    'homeAndReadlists',
     'leaderboard',
     'readlist',
     'bookReview',
@@ -135,7 +136,6 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
-# Define the directory where your static files will be collected.
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 MEDIA_URL = '/media/'
