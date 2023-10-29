@@ -62,20 +62,31 @@ def submit_review(request):
     else:
         return JsonResponse({'success': False, 'error': 'Invalid request method'})
 
+@csrf_exempt
 def toggle_bookmark(request):
     if request.method == "POST":
         book_id = request.POST.get('book_id')
-        # user = request.user
+        book = get_object_or_404(Book, id=book_id)
+        
+        if request.user in book.bookmarked_by.all():
+            book.bookmarked_by.remove(request.user)
+        else:
+            book.bookmarked_by.add(request.user)
+
+        book.save()
         return JsonResponse({'status': 'success'})
     return JsonResponse({'status': 'error'})
 
 @csrf_exempt
 def toggle_like(request, id):
-    book = get_object_or_404(Book, pk=id)
-    if request.user in book.liked_by.all():
-        book.liked_by.remove(request.user)
-    else:
-        book.liked_by.add(request.user)
-    
-    total_likes = book.liked_by.count()  # Menghitung jumlah like yang diperbarui
-    return JsonResponse({'status': 'success', 'total_likes': total_likes})
+    if request.method == 'POST':
+        book = get_object_or_404(Book, pk=id)
+        if request.user in book.liked_by.all():
+            book.liked_by.remove(request.user)
+        else:
+            book.liked_by.add(request.user)
+
+        book.save()  # Tambahkan baris ini untuk menyimpan perubahan
+
+        total_likes = book.liked_by.count()  # Menghitung jumlah like yang diperbarui
+        return JsonResponse({'status': 'success', 'total_likes': total_likes})

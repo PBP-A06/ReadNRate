@@ -18,6 +18,7 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+# from bookReview.views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -26,6 +27,8 @@ urlpatterns = [
     path('book/<int:id>/', include('bookReview.urls')),
     path('books/', include('book.urls')),
     path('readlist/', include('readlist.urls')),
+    # path('toggle_like/<int:id>/', toggle_like, name='toggle_like'),
+    # path('toggle_bookmark/', toggle_bookmark, name='toggle_bookmark'),
 ]
 
 # Serve media files during development

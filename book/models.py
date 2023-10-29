@@ -11,6 +11,7 @@ class Book(models.Model):
     stars = models.IntegerField(null=True, blank=True)
     likes = models.IntegerField(default=0)
     liked_by = models.ManyToManyField(User, related_name='liked_books', blank=True)
+    bookmarked_by = models.ManyToManyField(User, related_name='bookmarked_books', blank=True)
 
     def __str__(self):
         return self.title
