@@ -16,4 +16,6 @@ class Book(models.Model):
 
 class User(models.Model):
     username = models.CharField(max_length=255)
+    profile_name = models.CharField(max_length=255)
     name = models.CharField(max_length=255)
+    

@@ -1,5 +1,4 @@
 from django.shortcuts import render
-<<<<<<< HEAD
 import datetime
 from django.http import HttpResponseRedirect
 from django.urls import reverse
@@ -8,12 +7,10 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
-=======
 from book.models import Book
 from django.core import serializers
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
->>>>>>> 3681b6b7580e7496faf1b843585938f67b80d8e8
 
 @csrf_exempt
 def show_main(request):
@@ -21,7 +18,6 @@ def show_main(request):
     context = {
         'books':books,
     }
-<<<<<<< HEAD
 
     return render(request, "main.html", context)
 
@@ -45,6 +41,15 @@ def logout_user(request):
     response = HttpResponseRedirect(reverse('main:login'))
     response.delete_cookie('last_login')
     return response
-=======
-    return render(request, "main.html", context)
->>>>>>> 3681b6b7580e7496faf1b843585938f67b80d8e8
+
+def register(request):
+    form = UserCreationForm()
+
+    if request.method == "POST":
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Your account has been successfully created!')
+            return redirect('main:login')
+    context = {'form':form}
+    return render(request, 'register.html', context)
