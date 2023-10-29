@@ -29,22 +29,61 @@ def show_book_detail(request, id):
     else:
         form = ReviewForm()
 
-    return render(request, 'book_detail.html', {'book': book, 'reviews': reviews, 'form': form})
+    # Menambahkan bookId ke dalam konteks
+    context = {'book': book, 'reviews': reviews, 'form': form, 'bookId': id}
 
-# @login_required
-def add_review(request, id):
-    book = Book.objects.get(id=id)
+    return render(request, 'book_detail.html', context)
 
+@csrf_exempt
+def add_review_ajax(request, id):
     if request.method == 'POST':
-        form = ReviewForm(request.POST)
-        if form.is_valid():
-            review = form.save(commit=False)
-            review.book = book
-            review.user = request.user
-            review.save()
-            return redirect('book_detail', id=book.id)
+        review_text = request.POST.get("review_text")
+
+        review = Review.objects.create(
+            user=request.user,
+            book=Book.objects.get(id=id),
+            review_text=review_text,
+        )
+
+        return HttpResponse(b"CREATED", status=201)
+    
+    return HttpResponseNotFound()
+
+def submit_review(request):
+    if request.method == 'POST' and request.is_ajax():
+        review_text = request.POST.get('review_text')
+        book_id = request.POST.get('book_id')
+        review = Review(text=review_text, book_id=book_id)
+        review.save()
+
+        return JsonResponse({'success': True, 'review_text': review_text})
     else:
-        form = ReviewForm()
+        return JsonResponse({'success': False, 'error': 'Invalid request method'})
 
-    return render(request, 'review/add_review.html', {'form': form, 'book': book})
+def toggle_bookmark(request):
+    if request.method == "POST":
+        book_id = request.POST.get('book_id')
+        # user = request.user
+        return JsonResponse({'status': 'success'})
+    return JsonResponse({'status': 'error'})
 
+def toggle_like(request):
+    if request.method == "POST":
+        review_id = request.POST.get('review_id') # Ganti dari book_id ke review_id
+        try:
+            review = Review.objects.get(id=review_id)
+            
+            # Toggle likes_count (untuk contoh ini, saya hanya menaikkan jumlah likes)
+            review.likes_count += 1
+            review.save()
+            
+            return JsonResponse({'status': 'success', 'likes': review.likes_count})
+        except Review.DoesNotExist:
+            return JsonResponse({'status': 'error', 'message': 'Review not found.'})
+    return JsonResponse({'status': 'error', 'message': 'Invalid request method.'})
+
+
+# def get_book_json(request, book_id):
+#     book = Book.objects.get(id=book_id)
+#     data = serializers.serialize("json", [book, ])
+#     return HttpResponse(data, content_type="application/json")

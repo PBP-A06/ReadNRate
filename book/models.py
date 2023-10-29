@@ -11,8 +11,5 @@ class Book(models.Model):
     likes = models.IntegerField(default=0)
 
     def __str__(self):
-<<<<<<< HEAD
         return self.title
-=======
-        return self.title
->>>>>>> ac7699fb7ad89aee271404973718fe1658eaed1d
+    
