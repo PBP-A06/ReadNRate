@@ -3,33 +3,77 @@
 {% block content %}
 
 <body>
-    <h1>Create a New Readlist</h1>
-
-    <form method="post">
-        {% csrf_token %}
+    <div class="text-white mx-3">
+        <h1 class="text-3xl font-bold mb-4">Create a New Readlist</h1>
+    
+        <form id="readlistForm" class="space-y-4">
+            {% csrf_token %}
         {{ form.non_field_errors }}
-        {{ form.name.errors }}
-        {{ form.name.label_tag }} {{ form.name }}
-        <br>
-        <br>
-        {{ form.description.errors }}
-        {{ form.description.label_tag }} {{ form.description }}
-        <br>
-        <br>
+        <div class="w-1/2">
+            {{ form.name.errors }}
+            <label for="{{ form.name.id_for_label }}" class="mb-2 mr-4">{{ form.name.label }}: </label>
+           <div class="text-black mt-3">{{ form.name }}</div> 
+        </div>
+        <div class="w-1/2">
+            {{ form.description.errors }}
+            <label for="{{ form.description.id_for_label }}" class="mb-2 mr-4">{{ form.description.label }}: </label>
+            <div class="text-black mt-3">{{ form.description }}</div>
+        </div>
         {{ form.books.errors }}
-        {{ form.books.label_tag }}
-        {% for book in form.books.field.queryset %}
-            <div>
-                <label for="id_books_{{ forloop.counter0 }}">
-                    <img src="{{ book.image_link }}" alt="{{ book.title }}" width="100" height="100">
-                    {{ book.title }}
-                    <input type="checkbox" name="books" id="id_books_{{ forloop.counter0 }}" value="{{ book.id }}">
-                </label>
-            </div>
-        {% endfor %}
-        <button type="submit">Create Readlist</button>
-    </form>
 
+        <label class="block">{{ form.books.label_tag }}</label>
+            <div class="grid grid-cols-5 gap-4">
+                {% for book in form.books.field.queryset %}
+                    <div class="rounded-xl shadow-lg bg-zinc-800 relative">
+                        <img class="rounded-xl overflow-hidden w-52 mt-4 ml-4" src="{{ book.image_link }}" alt="{{ book.title }}">
+                        <div class="p-4 space-y-2">
+                            <h2 class="text-lg font-bold">{{ book.title }}</h2>
+                            <div class="flex items-center">
+                                <input type="checkbox" name="books" id="id_books_{{ forloop.counter0 }}" value="{{ book.id }}" class="form-checkbox h-5 w-5 text-blue-600">
+                                <label for="id_books_{{ forloop.counter0 }}" class="ml-2 text-white">Select</label>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            <button type="button" id="submitBtn" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-zinc-800">Create Readlist</button>
+        </form>
+    </div>
+</body>
+<script>
+document.getElementById('submitBtn').addEventListener('click', function() {
+    var form = document.getElementById('readlistForm');
+    var formData = new FormData(form);
+
+    fetch("{% url 'readlist:create_readlist' %}", {
+        method: 'POST',
+        body: formData,
+        headers: {
+            'X-CSRFToken': getCookie('csrftoken')
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        // Handle response here
+        console.log(data);
+    });
+});
+
+function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+</script>
     <!-- <div id="result"></div>
 
     <script>
@@ -47,6 +91,6 @@
             });
         });
     </script> -->
-</body>
+
 
 {% endblock content %}
