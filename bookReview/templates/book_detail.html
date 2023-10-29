@@ -15,10 +15,10 @@
     <button id="review-button">Review</button>
 
     <div id="review-form" style="display: none;">
-        <form id="review-form" method="post">
+        <form id="review-form">
             {% csrf_token %}
             {{ form.as_p }}
-            <button id="submit-review" type="submit">Submit</button>
+            <button id="submit-review-ajax" type="button">Submit</button>
         </form>
     </div>
 
@@ -28,6 +28,16 @@
             <p>{{ review.review_text }}</p>
         {% endfor %}
     </div>
+
+    <div id="review-form" style="display: none;">
+        <form id="review-form">
+            {% csrf_token %}
+            <input type="number" name="rating" min="1" max="5" required>
+            <textarea name="review_text" required></textarea>
+            <button id="submit-review" type="submit">Submit</button>
+        </form>
+    </div>
+    
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>

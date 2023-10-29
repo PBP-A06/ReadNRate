@@ -1,7 +1,7 @@
 from django.urls import path
 from bookReview.views import *
 
-app_name = "book"  # Pastikan app_name mengacu pada aplikasi "book" Anda
+app_name = "bookReview"  
 
 urlpatterns = [
     path('', show_book_detail, name='show_book_detail'),

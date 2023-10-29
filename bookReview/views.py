@@ -48,12 +48,3 @@ def add_review(request, id):
 
     return render(request, 'review/add_review.html', {'form': form, 'book': book})
 
-# @csrf_exempt
-# def add_bookmark(request, id):
-#     if request.method == 'POST':
-#         bookmark = get_object_or_404(Book, pk=id)
-#         bookmark.amount += 1
-#         bookmark.save()
-#         return JsonResponse({'status': 'ok', 'amount': bookmark.bookmark})
-#     return HttpResponseNotFound()
-
