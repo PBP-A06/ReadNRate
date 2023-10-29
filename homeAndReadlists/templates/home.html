@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+  <body>
+    <div class="landing-page">
+      <div class="div">
+        <div class="div-2">
+          <div class="div-2">
+            <div class="overlap-group">
+              <img class="background-image" src="img/background-image.png" />
+              <div class="background"></div>
+            </div>
+          </div>
+          <div class="content">
+            <div class="text-wrapper">YOUR RECENT REVIEWS</div>
+            <img class="line" src="img/line-1.svg" />
+            <p class="welcome-back-user">Welcome back, {"{"}User.name{"}"}. <br />Let’s read!</p>
+            <img class="a-href-https-www" src="img/a.png" />
+          </div>
+        </div>
+        <div class="navbar">
+          <div class="user">
+            <div class="overlap-group-2">
+              <img class="profile-icon" src="img/profile-icon.png" />
+              <div class="user-username">{"{"}User.username{"}"}</div>
+            </div>
+          </div>
+          <div class="logo-header">
+            <div class="overlap">
+              <div class="readnrate-logo">eadNRate</div>
+              <img class="img" src="img/readnrate-logo-2-1.png" />
+            </div>
+          </div>
+          <div class="navbar-buttons">
+            <div class="BOOKS-button"><div class="text-wrapper-2">BOOKS</div></div>
+            <div class="LEADERBOARD-button"><div class="text-wrapper-2">LEADERBOARD</div></div>
+            <div class="READLISTS-button"><div class="text-wrapper-2">READLISTS</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+{% endblock content %}
