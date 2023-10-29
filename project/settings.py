@@ -44,11 +44,15 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'main',
+    'home',
+    'books',
     'book',
-    'homeAndReadlists',
     'leaderboard',
+<<<<<<< HEAD
     'readlist',
     'bookReview',
+=======
+>>>>>>> f13d8d2601e32e2470cd9060b6290cfca1c6ebe1
     'user_profile',
 ]
 
@@ -134,9 +138,11 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = 'static/'
+<<<<<<< HEAD
+=======
 
-# Define the directory where your static files will be collected.
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+>>>>>>> f13d8d2601e32e2470cd9060b6290cfca1c6ebe1
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

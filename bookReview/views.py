@@ -7,15 +7,6 @@ from django.http import HttpResponse, JsonResponse, HttpResponseNotFound
 from django.core import serializers
 from django.views.decorators.csrf import csrf_exempt
 
-# @login_required
-# def book_detail(request, book_id):
-#     book = get_object_or_404(Book, id=book_id)
-#     context = {
-#         'book': book,
-#     }
-#     return render(request, "book_detail.html", context)
-
-
 def show_book_detail(request, id):
     book = get_object_or_404(Book, pk=id)
     reviews = Review.objects.filter(book=book)

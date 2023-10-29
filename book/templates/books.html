@@ -53,7 +53,7 @@
             // show all books
             for (let i = 0; i < books.length; i++) {
                 book = books[i];
-                htmlString += `
+                htmlString += `\n
                 <div class="rounded-xl shadow-lg bg-zinc-800 relative">
                     <div class="p-5 flex flex-col">
                         <img src="${book.fields.image_link}" alt="Cover for ${book.fields.title}" 
@@ -65,13 +65,12 @@
                         </p>
                         <br>
                         <br>
-                        <button onclick="window.location.href='/book/${book.pk}/'" class="text-center bg-gray-600 text-white py-2 rounded-lg font-semibold mt-4 hover:bg-gray-400 
+                        <button class="text-center bg-gray-600 text-white py-2 rounded-lg font-semibold mt-4 hover:bg-gray-400 
                         focus:scale-95 transition-all duration-50 absolute inset-x-3 bottom-3">
                             Details
                         </button>
                     </div>
-                </div>`;
-
+                </div>`
             }
             htmlString += `\n</div></div>`;
             document.getElementById("book_cards").innerHTML = htmlString;
