@@ -3,6 +3,7 @@ from django.db import models
 class Book(models.Model):
     title = models.CharField(max_length=255)
     author = models.CharField(max_length=255)
+<<<<<<< HEAD
     publication_date = models.DateField(null=True, blank=True)
     genre = models.CharField(max_length=50, blank=True)
     description = models.TextField(blank=True)
@@ -22,3 +23,6 @@ class Readlist(models.Model):
  
     def __str__(self):
         return self.title
+=======
+    
+>>>>>>> 62b9ac142c6926e1adac08f874bbd8050920f02d
