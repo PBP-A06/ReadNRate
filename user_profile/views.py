@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from book.models import Book
+from user_profile.models import Book
 from django.core import serializers
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
@@ -12,8 +12,16 @@ def get_books(request):
     return HttpResponse(serializers.serialize("json", data), content_type="application/json")
 
 @csrf_exempt
-def show_books(request):
-    books = Book.objects.filter(user=request.user)
+def show_bookmarked(request):
+    books = Book.objects.filter(bookmarked=True)
+    context = {
+        'books':books,
+    }
+    return render(request, "profile.html", context)
+
+@csrf_exempt
+def show_liked(request):
+    books = Book.objects.filter(liked=True)
     context = {
         'books':books,
     }
