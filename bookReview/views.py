@@ -7,12 +7,15 @@ from django.http import HttpResponse, JsonResponse, HttpResponseNotFound
 from django.core import serializers
 from django.views.decorators.csrf import csrf_exempt
 
-# def get_books_by_id(request, id):
-#     data = Book.objects.filter(pk=id)
-#     data_json = serializers.serialize("json", data)
-#     return HttpResponse(data_json, content_type="application/json")
-
 # @login_required
+# def book_detail(request, book_id):
+#     book = get_object_or_404(Book, id=book_id)
+#     context = {
+#         'book': book,
+#     }
+#     return render(request, "book_detail.html", context)
+
+
 def show_book_detail(request, id):
     book = get_object_or_404(Book, pk=id)
     reviews = Review.objects.filter(book=book)
@@ -29,9 +32,8 @@ def show_book_detail(request, id):
     else:
         form = ReviewForm()
 
-    # Menambahkan bookId ke dalam konteks
-    context = {'book': book, 'reviews': reviews, 'form': form, 'bookId': id}
-
+    has_liked = request.user in book.liked_by.all()
+    context = {'book': book, 'reviews': reviews, 'form': form, 'bookId': id, 'has_liked': has_liked, 'total_likes': book.liked_by.count()}
     return render(request, 'book_detail.html', context)
 
 @csrf_exempt
@@ -67,23 +69,13 @@ def toggle_bookmark(request):
         return JsonResponse({'status': 'success'})
     return JsonResponse({'status': 'error'})
 
-def toggle_like(request):
-    if request.method == "POST":
-        review_id = request.POST.get('review_id') # Ganti dari book_id ke review_id
-        try:
-            review = Review.objects.get(id=review_id)
-            
-            # Toggle likes_count (untuk contoh ini, saya hanya menaikkan jumlah likes)
-            review.likes_count += 1
-            review.save()
-            
-            return JsonResponse({'status': 'success', 'likes': review.likes_count})
-        except Review.DoesNotExist:
-            return JsonResponse({'status': 'error', 'message': 'Review not found.'})
-    return JsonResponse({'status': 'error', 'message': 'Invalid request method.'})
-
-
-# def get_book_json(request, book_id):
-#     book = Book.objects.get(id=book_id)
-#     data = serializers.serialize("json", [book, ])
-#     return HttpResponse(data, content_type="application/json")
+@csrf_exempt
+def toggle_like(request, id):
+    book = get_object_or_404(Book, pk=id)
+    if request.user in book.liked_by.all():
+        book.liked_by.remove(request.user)
+    else:
+        book.liked_by.add(request.user)
+    
+    total_likes = book.liked_by.count()  # Menghitung jumlah like yang diperbarui
+    return JsonResponse({'status': 'success', 'total_likes': total_likes})
