@@ -65,4 +65,4 @@ Kami menyediakan dan menganalisis lebih dari 100 buku untuk anda nilai dan juga 
 <hr>
 
 ## 5. Dataset
-Menggunakan dataset .csv pada Drive kelas PBP
+https://www.kaggle.com/datasets/jalota/books-dataset
