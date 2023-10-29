@@ -42,8 +42,8 @@
                     </ul>
                 </div>
                 <div class="flex items-center gap-6">
-                    <button class="bg-[#3CB81D] text-white px-5 py-2 rounded-full hover:bg-lime-900 font-['Chivo']" href="#">Sign in</button>
-                    <ion-icon onclick="onToggleMenu(this)" name="menu" class="text-3xl cursor-pointer md:hidden"></ion-icon>
+                    <a class="bg-[#3CB81D] text-white px-5 py-2 rounded-full hover:bg-lime-900 font-['Chivo']" href="{% url 'main:login_user' %}">Sign in</a>
+                    <ion-icon onclick="onToggleMenu(this)" name="menu" class="text-3xl cursor-pointer md:hidden"></ion-icon>             
                 </div>
          </header>
 
