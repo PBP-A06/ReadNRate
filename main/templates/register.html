@@ -1,44 +1,53 @@
+{% extends 'base.html' %}
 
 {% block meta %}
-    <title>Register</title>
+<title>Register</title>
 {% endblock meta %}
 
-{% block content %}  
+{% block content %}
+<div class="login">
+    <div class="container centered">
+        <div class="row d-flex justify-content-center align-items-center">
+            <div class="card shadow-2-strong" style="border-radius: 2rem;">
+                <div class="card-body p-5">
+                    <h1 class="mb-5 text-center black">Register</h1>
 
-<div class = "register">
-    
-    <h1>JOIN READNRATE</h1>  
+                    <form method="POST" action="">
+                        {% csrf_token %}
+                        {% for field in form %}
+                        <p>
+                            <div style="display:table-row;" class="row">
+                                <div style="display:table-cell; vertical-align:middle; text-align:left;" class="col-sm-6 black">
+                                    {{field.label_tag}}
+                                </div>
+                                <div style="display:table-cell; vertical-align:middle; text-align:right;" class="col-sm-6 black">
+                                    {{field}}
+                                </div>
+                            </div>
 
-        <form method="POST" >  
-            {% csrf_token %}  
-            <table>  
-                <tr>
-                    <td>Username </td>
-            
-                    <td><input type="text" name="username" placeholder="Username" class="form-control"></td>
-                </tr>
-                        
-                <tr>
-                    <td>Password </td>
-                    <td><input type="password" name="password" placeholder="Password" class="form-control"></td>
-                </tr>
-    
-                <tr>
-                    <td></td>
-                    <td><input class="btn login_btn" type="submit" value="Register"></td>
-                </tr>
-            </table>  
-        </form>
-        
+                            {% if field.errors %}
+                            <ul class="errorlist">
+                                {% for error in field.errors %}
+                                <li style="color: red;">{{ error }}</li>
+                                {% endfor %}
+                            </ul>
+                            {% endif %}
+                        </p>
+                        {% endfor %}
+<input type="submit" class="btn btn-lg btn-secondary btn-block mt-4" name="submit" value="Register"/>
+                    </form>
 
-    {% if messages %}  
-        <ul>   
-            {% for message in messages %}  
-                <li>{{ message }}</li>  
-                {% endfor %}  
-        </ul>   
-    {% endif %}
+                    {% if messages %}
+                        <ul> 
+                            {% for message in messages %}
+                                <li class="text-center" style="color: red;">{{ message }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
 
-</div>  
-
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock content %}
