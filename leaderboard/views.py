@@ -1,41 +1,24 @@
 from django.shortcuts import render
 from book.models import Book
-from django.http import HttpResponse, HttpResponseRedirect, HttpResponseNotFound
-# from leaderboard.forms import 
-from django.urls import reverse
+# from readlist.models import Readlist
 from django.core import serializers
-from django.shortcuts import redirect
-from django.contrib.auth.forms import UserCreationForm
-from django.contrib import messages  
-from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.decorators import login_required
-import datetime
+from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
+# from leaderboard.forms import 
 
-def leaderboad_option(request):
+@csrf_exempt
+def leaderboard_option(request):
     books = Book.objects.all()
     context = {
         'books':books,
     }
     return render(request, "leaderboard.html", context)
 
-def show_by_likes(request):
-    books = Book.objects.all()
-    context = {
-        'books':books,
-    }
-    return render(request, "likes.html", context)
+@csrf_exempt
+def get_books(request):
+    data = Book.objects.all()
+    return HttpResponse(serializers.serialize("json", data), content_type="application/json")
 
-def show_by_rating(request):
-    books = Book.objects.all()
-    context = {
-        'books':books,
-    }
-    return render(request, "rating.html", context)
-
-def show_readlist(request):
-    # nanti ambil instance readlistnya
-    context = {
-        'test':'testing'
-    }
-    return render(request, "readlist.html", context)
+# def get_readlists(request):
+#     data = Readlist.objects.all()
+#     return HttpResponse(serializers.serialize("json", data), content_type="application/json") 

@@ -19,6 +19,8 @@
     </head>
 
     <body class="font-[Almarai] bg-gradient-to-t from-[#97A8B9] to-sky-950 h-screen">
+    <!-- <body class="font-[Almarai] bg-sky-950"> -->
+    <!-- <body class="font-[Almarai] bg-zinc-900"> -->
         <header class="bg-[#272727]">
             <nav class="flex justify-between items-center w-[92%]  mx-auto">
                 <div>
@@ -39,10 +41,11 @@
                     </ul>
                 </div>
                 <div class="flex items-center gap-6">
-                    <button class="bg-[#3CB81D] text-white px-5 py-2 rounded-full hover:bg-lime-900">Sign in</button>
+                    <button class="bg-[#3CB81D] text-white h-9 px-4 py-1 rounded-full hover:bg-lime-900">Sign In</button>
                     <ion-icon onclick="onToggleMenu(this)" name="menu" class="text-3xl cursor-pointer md:hidden"></ion-icon>
                 </div>
-        </header>
+         </header>
+
         {% block content %}
         {% endblock content %}
     </body>
