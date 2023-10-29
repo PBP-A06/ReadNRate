@@ -3,4 +3,5 @@ from main.views import *
 
 urlpatterns = [
     path('', include('home.urls')),
+    path('', include('books.urls')),
 ]

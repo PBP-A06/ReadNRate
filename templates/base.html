@@ -16,19 +16,20 @@
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400&family=Chivo:wght@700&display=swap" rel="stylesheet">
     </head>
 
-    <body class="font-[Almarai] bg-gradient-to-t from-[#97A8B9] to-sky-950 h-screen">
+    <body class="font-[Almarai] bg-gradient-to-t from-[#97A8B9] to-[#323539] h-screen">
         <header class="bg-[#272727]">
             <nav class="flex justify-between items-center w-[92%]  mx-auto">
                 <div>
-                    <img class="w-16 cursor-pointer" src="logolong.png" alt="ReadNRateLogo">
+                    <img class="w-16 cursor-pointer ml-15" src="logolong.png" alt="ReadNRateLogo">
                 </div>
                 <div
                     class="nav-links duration-500 md:static absolute  md:min-h-fit min-h-[60vh] left-0 top-[-100%] md:w-auto  w-full flex items-center px-5">
-                    <ul class="flex md:flex-row flex-col md:items-center md:gap-[4vw] gap-8">
+                    <ul class="flex md:flex-row flex-col md:items-center md:gap-[4vw] gap-8 mt-8 mb-8">
                         <li>
-                            <a class="text-slate-400 font-normal font-['Cocogoose']" href="#">BOOKS</a>
+                            <a class="text-slate-400 font-normal font-['Cocogoose']" href="{% url 'books:show_books' %}">BOOKS</a>
                         </li>
                         <li>
                             <a class="text-slate-400 font-normal font-['Cocogoose']" href="#">READLISTS</a>
@@ -39,7 +40,7 @@
                     </ul>
                 </div>
                 <div class="flex items-center gap-6">
-                    <button class="bg-[#3CB81D] text-white px-5 py-2 rounded-full hover:bg-lime-900">Sign in</button>
+                    <button class="bg-[#3CB81D] text-white px-5 py-2 rounded-full hover:bg-lime-900 font-['Chivo']">Sign in</button>
                     <ion-icon onclick="onToggleMenu(this)" name="menu" class="text-3xl cursor-pointer md:hidden"></ion-icon>
                 </div>
         </header>
