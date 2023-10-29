@@ -56,6 +56,8 @@ document.getElementById('submitBtn').addEventListener('click', function() {
     .then(data => {
         // Handle response here
         console.log(data);
+         // Redirect to another page
+         window.location.href = "{% url 'readlist:show_readlist' %}";
     });
 });
 

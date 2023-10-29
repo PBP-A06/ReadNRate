@@ -35,7 +35,7 @@ def create_readlist(request):
             readlist.user = request.user
             readlist.save()
             form.save_m2m()  # This is needed to save the many-to-many relationship
-            return render(request, 'create_readlist.html', {'form': form})
+            return JsonResponse({'status':'success', 'message':'Readlist created successfully'})
     else:
         form = AddBooksToReadlistForm()
     return render(request, 'create_readlist.html', {'form': form})
@@ -45,6 +45,7 @@ def get_readlists():
     readlists = Readlist.objects.all()
     return HttpResponse(serializers.serialize('json', readlists))
 
+#TODO:fix likes
 #increment number of likes
 def like_a_readlist(request, id):
     updated_readlist = Readlist.objects.get(pk=id)
