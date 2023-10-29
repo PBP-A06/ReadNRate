@@ -1,0 +1,120 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="text-white my-5 mx-3 text-center">
+        <p id="sorting" class="text-5xl text-center mb-0">Leaderboard by Rating</p>
+
+        <p class="mt-3 text-xl">Change to sort by?&nbsp   
+            <button id="likes" onclick="refreshBooks('likes')"  
+            class="bg-gray-600 hover:bg-gray-400 text-white h-8 font-bold py-1 px-3 rounded-full text-base">
+                Likes
+            </button>
+
+            <button id="rating" onclick="refreshBooks('rating')"
+            class="bg-gray-600 hover:bg-gray-400 text-white h-8 font-bold py-1 px-3 rounded-full text-base">
+                Rating
+            </button>
+    
+            <button id="readlist" onclick="refreshBooks('readlist')"
+            class="bg-gray-600 hover:bg-gray-400 text-white h-8 font-bold py-1 px-3 rounded-full text-base">
+                Readlist
+            </button>
+        </p>
+    </div>
+
+    <!-- <dialog id="exampleModal" class="modal">
+        <div class="modal-box w-11/12 max-w-5xl">
+          <h3 class="font-bold text-lg">Hello!</h3>
+          <ul>
+            {% for book in books}
+            <li></li>
+          </ul>
+          <p class="py-4">Click the button below to close</p>
+          <div class="modal-action">
+            <form method="dialog">
+              <button class="btn">Close</button>
+            </form>
+          </div>
+        </div>
+    </dialog> -->
+    
+    <div id="book_cards" class="text-white mx-3"></div>
+
+    <script>
+        async function getBooks() {
+            return fetch("{% url 'get_books' %}").then((res) => res.json());
+        }
+
+        // async function getReadlists() {
+        //     return fetch("{...... url 'get_readlists' ....}").then((res) => res.json());
+        // }
+
+        // sort by stars. if the stars is equal => ascending by title
+        function compareByRating(a, b) {
+            if (a.fields.stars == b.fields.stars) {
+                return b.fields.title.localeCompare(a.fields.title);
+            }
+            return a.fields.stars - b.fields.stars;
+        }
+
+        // sort by likes. if the likes is equal => ascending by title
+        function compareByLikes(a, b) {
+            if (a.fields.likes == b.fields.likes) {
+                return b.fields.title.localeCompare(a.fields.title);
+            }
+            return a.fields.likes - b.fields.likes;
+        }
+    
+        // only show top 10 book and readlist
+        async function refreshBooks(param) {
+            document.getElementById("book_cards").innerHTML = "";           
+            let htmlString = `<div class="flex items-center justify-content-center container mx-auto my-8">
+                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-5">`;
+
+            if (param.match("readlist")) {
+                // const readlists = await getReadlists(); 
+                // readlists.sort(compareByLikes); // NNT GANTI JD LIKE READLISTNYA
+                // readlists.reverse();
+                document.getElementById("sorting").innerHTML = `\n<p class="text-center mt-0 text-5xl mb-0">Leaderboard by Readlist Likes</p>`;
+                // HANDLE READLIST
+            
+            } else {
+                const books = await getBooks();
+                if (param.match("likes")) {
+                    document.getElementById("sorting").innerHTML = `\n<p class="text-center mt-0 text-5xl mb-0">Leaderboard by Likes</p>`;
+                    books.sort(compareByLikes);
+                    books.reverse();
+                } else if (param.match("rating")) {
+                    document.getElementById("sorting").innerHTML = `\n<p class="text-center mt-0 text-5xl mb-0">Leaderboard by Rating</p>`;
+                    books.sort(compareByRating);
+                    books.reverse();
+                }
+                // show top 10 books only
+                for (let i = 0; i < 10; i++) {
+                    book = books[i];
+                    htmlString += `\n
+                    <div class="rounded-xl shadow-lg bg-zinc-800 relative">
+                        <div class="p-5 flex flex-col">
+                            <img src="${book.fields.image_link}" alt="Cover for ${book.fields.title}" 
+                            class="rounded-xl overflow-hidden w-52">
+                            <p class="text-m md:text-m font-medium mt-3 text-white">
+                                ${i+1}. ${book.fields.title}
+                                <br>
+                                -- ${book.fields.category}
+                            </p>
+                            <br>
+                            <br>
+                            <button class="text-center bg-gray-600 text-white py-2 rounded-lg font-semibold mt-4 hover:bg-gray-400 
+                            focus:scale-95 transition-all duration-50 absolute inset-x-3 bottom-3">
+                                Details
+                            </button>
+                        </div>
+                    </div>`
+                }
+                htmlString += `\n</div></div>`;
+            }
+            document.getElementById("book_cards").innerHTML = htmlString;
+        }
+        refreshBooks("rating"); // Default = by rating
+    </script>
+{% endblock content %}
