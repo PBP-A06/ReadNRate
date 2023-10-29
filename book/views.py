@@ -1,13 +1,7 @@
 from django.shortcuts import render
-from django.core import serializers
-from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from book.models import Book
-
-@csrf_exempt
-def get_books(request):
-    data = Book.objects.all()
-    return HttpResponse(serializers.serialize("json", data), content_type="application/json")
+from leaderboard.views import *
 
 @csrf_exempt
 def show_books(request):
@@ -15,4 +9,4 @@ def show_books(request):
     context = {
         'books':books,
     }
-    return render(request, "books.html", context)
+    return render(request, "all-books.html", context)

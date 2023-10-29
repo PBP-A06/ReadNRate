@@ -21,26 +21,11 @@
             </button>
         </p>
     </div>
-
-    <!-- <dialog id="exampleModal" class="modal">
-        <div class="modal-box w-11/12 max-w-5xl">
-          <h3 class="font-bold text-lg">Hello!</h3>
-          <ul>
-            {% for book in books}
-            <li></li>
-          </ul>
-          <p class="py-4">Click the button below to close</p>
-          <div class="modal-action">
-            <form method="dialog">
-              <button class="btn">Close</button>
-            </form>
-          </div>
-        </div>
-    </dialog> -->
     
     <div id="book_cards" class="text-white mx-3"></div>
 
     <script>
+        // ajax get
         async function getBooks() {
             return fetch("{% url 'get_books' %}").then((res) => res.json());
         }
@@ -63,6 +48,10 @@
                 return b.fields.title.localeCompare(a.fields.title);
             }
             return a.fields.likes - b.fields.likes;
+        }
+
+        async function showDetails(pk) {
+            window.open("book-id-" + pk + "/", "_blank");
         }
     
         // only show top 10 book and readlist
@@ -105,16 +94,17 @@
                             <br>
                             <br>
                             <button class="text-center bg-gray-600 text-white py-2 rounded-lg font-semibold mt-4 hover:bg-gray-400 
-                            focus:scale-95 transition-all duration-50 absolute inset-x-3 bottom-3">
+                            focus:scale-95 transition-all duration-50 absolute inset-x-3 bottom-3" method="GET" onclick="showDetails(${book.pk})">
                                 Details
                             </button>
                         </div>
                     </div>`
                 }
-                htmlString += `\n</div></div>`;
+                htmlString += `\n</div></div>`;         
             }
             document.getElementById("book_cards").innerHTML = htmlString;
         }
+
         refreshBooks("rating"); // Default = by rating
     </script>
 {% endblock content %}
