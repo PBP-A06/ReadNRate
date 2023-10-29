@@ -60,7 +60,7 @@
                 <div id="reviews">
                     {% for review in reviews %}
                         <div class="flex flex-col border-b-2 border-gray-600 pb-4 mb-4"> <!-- Container untuk satu review -->
-                            <h2 class="font-semibold mb-2">Review by {review.user}</h2>
+                            <h2 class="font-semibold mb-2">Review by {{ user.username }}</h2>
                             <p class="text-white-600 w-full">{{ review.review_text }}</p>
                         </div>
                     {% endfor %}
@@ -87,28 +87,38 @@
     const reviewsContainer = document.getElementById("reviews");
     submitButton.addEventListener('click', () => {
         const reviewText = document.getElementById("review-text").value;
-        // Membuat kontainer review
-        const reviewDiv = document.createElement("div");
-        reviewDiv.className = "flex flex-col border-b-2 border-gray-600 pb-4 mb-4";
+        // Kirim review melalui AJAX ke server
+        fetch(`/path_to_your_api/`, {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': '{{ csrf_token }}',
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: 'review_text=' + encodeURIComponent(reviewText)
+        })
+        .then(response => response.json())
+        .then(data => {
+            if(data.success) {
+                const reviewDiv = document.createElement("div");
+                reviewDiv.className = "flex flex-col border-b-2 border-gray-600 pb-4 mb-4";
 
-        // Tambahkan judul review
-        const reviewTitle = document.createElement("h2");
-        reviewTitle.className = "font-semibold mb-2";
-        reviewTitle.textContent = "Review by xxx";
-        reviewDiv.appendChild(reviewTitle);
+                const reviewTitle = document.createElement("h2");
+                reviewTitle.className = "font-semibold mb-2";
+                reviewTitle.textContent = "Review by {{ user.username }}";
+                reviewDiv.appendChild(reviewTitle);
 
-        // Tambahkan teks review
-        const reviewParagraph = document.createElement("p");
-        reviewParagraph.className = "text-gray-400 w-full";
-        reviewParagraph.textContent = reviewText;
-        reviewDiv.appendChild(reviewParagraph)
-        
-        // Tambahkan kontainer review dan teks review ke dalam container utama
-        reviewsContainer.appendChild(reviewDiv);
+                const reviewParagraph = document.createElement("p");
+                reviewParagraph.className = "text-gray-400 w-full";
+                reviewParagraph.textContent = reviewText;
+                reviewDiv.appendChild(reviewParagraph)
 
-        // Reset isi dari textfield review
-        document.getElementById("review-text").value = '';
+                reviewsContainer.appendChild(reviewDiv);
+                
+                document.getElementById("review-text").value = '';
+            }
+        });
     });
+
 
     document.getElementById('bookmark-button').addEventListener('click', function() {
         let bookId = this.getAttribute('data-book');
