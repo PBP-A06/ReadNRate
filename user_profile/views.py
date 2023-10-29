@@ -1,8 +1,10 @@
 from django.shortcuts import render
+from book.models import Book
 from django.core import serializers
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
-from book.models import Book
+
+# Create your views here.
 
 @csrf_exempt
 def get_books(request):
@@ -11,8 +13,8 @@ def get_books(request):
 
 @csrf_exempt
 def show_books(request):
-    books = Book.objects.all()
+    books = Book.objects.filter(user=request.user)
     context = {
         'books':books,
     }
-    return render(request, "books.html", context)
+    return render(request, "profile.html", context)
