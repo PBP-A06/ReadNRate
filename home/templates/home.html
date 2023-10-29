@@ -3,13 +3,26 @@
 {% block content %}
 
     <div class="text-white font-light font-['Almarai'] pl-10 ml-40 mt-40 mb-0">
+
+        {% if user.is_authenticated %}
         <h1 class="w-[1236px] text-[84px]">
-            Welcome back, <u>{{ nama }}.</u>
+            Welcome back, <u>{{ user.username }}.</u>
         </h1>
+        {% else %}
+        <h1 class="w-[1236px] text-[84px]">
+            Review your favorite books
+        </h1>
+        {% endif %}
+
         <h2 class="w-[1236px] text-[60px] mt-0">
             Let's read!
         </h2>
-        <button class="bg-[#3CB81D] text-white px-5 py-2 rounded-full hover:bg-lime-900 font-['Chivo']" href="{% url 'main:register' %}">JOIN NOW</button>
+
+        {% if user.is_authenticated %}
+            <a class="bg-[#FF0000] text-white px-5 py-2 rounded-full hover:bg-lime-900 font-['Chivo']" href="{% url 'main:logout' %}">Logout</a>
+        {% else %}
+            <a class="bg-[#3CB81D] text-white px-5 py-2 rounded-full hover:bg-lime-900 font-['Chivo']" href="{% url 'main:register' %}">Join Now</a>
+        {% endif %}
     </div>
     
     <div class="items-center justify-center w-full">

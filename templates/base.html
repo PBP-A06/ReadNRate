@@ -12,6 +12,7 @@
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
         <script src="https://cdn.tailwindcss.com"></script>
 
+
         <!-- FONTS -->
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -42,7 +43,11 @@
                     </ul>
                 </div>
                 <div class="flex items-center gap-6">
-                    <a class="bg-[#3CB81D] text-white px-5 py-2 rounded-full hover:bg-lime-900 font-['Chivo']" href="{% url 'main:login' %}">Sign in</a>
+                    {% if user.is_authenticated %}
+                    <span class="text-slate-400 font-normal font-['Cocogoose']">{{ user.username }}</span>
+                    {% else %}
+                        <a class="bg-[#3CB81D] text-white px-5 py-2 rounded-full hover:bg-lime-900 font-['Chivo']" href="{% url 'main:login' %}">Sign in</a>
+                    {% endif %}
                     <ion-icon onclick="onToggleMenu(this)" name="menu" class="text-3xl cursor-pointer md:hidden"></ion-icon>             
                 </div>
          </header>
