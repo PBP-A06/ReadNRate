@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<head>
+    <title>Top 5 Readlists</title>
+</head>
+<body>
+    <h1>Top 5 Readlists</h1>
+    <ul>
+        {% for readlist in top_5_readlists %}
+            <li>
+                <h2>{{ readlist.name }}</h2>
+                <h5>{{readlist.user.username}}</h5>
+                <ul>
+                    {% for book in readlist.books.all %}
+                        <li>{{ book.title }}</li>
+                    {% endfor %}
+                </ul>
+            </li>
+        {% endfor %}
+    </ul>
+
+    <a href="{% url 'readlist:create_readlist' %}">Create your own read list</a>
+</body>
+
+{% endblock content %}

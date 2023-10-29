@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>{{ readlist.name }}</h1>
+<p>{{ readlist.description }}</p>
+
+<h2>Books:</h2>
+<ul>
+{% for book in readlist.books.all %}
+    <li>{{ book.title }}</li>
+    <img src="{{ book.image_link }}" alt="{{ book.title }}" width="100" height="100">
+{% empty %}
+    <li>No books in this readlist.</li>
+{% endfor %}
+</ul>
+<div id="book_cards" class="text-white mx-3"></div>
+
+    <script>
+        async function getBooks() {
+            return fetch("{% url 'readlist_detail' %}").then((res) => res.json());
+        }
+
+        // sort by category. if equals => ascending by title
+        function compareByCategory(a, b) {
+            if (a.fields.category.match(b.fields.category)) {
+                return a.fields.title.localeCompare(b.fields.title);
+            }
+            return a.fields.category.localeCompare(b.fields.category);
+        }
+
+        // sort ascending by title
+        function compareByTitle(a, b) { 
+            return a.fields.title.localeCompare(b.fields.title);
+        }
+    
+        async function refreshBooks(param) {
+            document.getElementById("book_cards").innerHTML = "";           
+            let htmlString = `<div class="flex items-center justify-content-center container mx-auto my-8">
+                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-5">`;
+
+            const books = await getBooks();
+            if (param.match("title")) {
+                document.getElementById("sorting").innerHTML = `\n<p class="text-center mt-0 text-5xl mb-0">Books by Title</p>`;
+                books.sort(compareByTitle);
+            } else if (param.match("category")) {
+                document.getElementById("sorting").innerHTML = `\n<p class="text-center mt-0 text-5xl mb-0">Books by Category</p>`;
+                books.sort(compareByCategory);
+            }
+            // show all books
+            for (let i = 0; i < books.length; i++) {
+                book = books[i];
+                htmlString += `\n
+                <div class="rounded-xl shadow-lg bg-zinc-800 relative">
+                    <div class="p-5 flex flex-col">
+                        <img src="${book.fields.image_link}" alt="Cover for ${book.fields.title}" 
+                        class="rounded-xl overflow-hidden w-52">
+                        <p class="text-m md:text-m font-medium mt-3 text-white">
+                            ${i+1}. ${book.fields.title}
+                            <br>
+                            -- ${book.fields.category}
+                        </p>
+                        <br>
+                        <br>
+                        <button class="text-center bg-gray-600 text-white py-2 rounded-lg font-semibold mt-4 hover:bg-gray-400 
+                        focus:scale-95 transition-all duration-50 absolute inset-x-3 bottom-3">
+                            Details
+                        </button>
+                    </div>
+                </div>`
+            }
+            htmlString += `\n</div></div>`;
+            document.getElementById("book_cards").innerHTML = htmlString;
+        }
+        refreshBooks("title"); // Default = by title
+    </script>
+
+{% endblock content %}

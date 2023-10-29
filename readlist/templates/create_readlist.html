@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<body>
+    <h1>Create a New Readlist</h1>
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+        {{ form.name.errors }}
+        {{ form.name.label_tag }} {{ form.name }}
+        <br>
+        <br>
+        {{ form.description.errors }}
+        {{ form.description.label_tag }} {{ form.description }}
+        <br>
+        <br>
+        {{ form.books.errors }}
+        {{ form.books.label_tag }}
+        {% for book in form.books.field.queryset %}
+            <div>
+                <label for="id_books_{{ forloop.counter0 }}">
+                    <img src="{{ book.image_link }}" alt="{{ book.title }}" width="100" height="100">
+                    {{ book.title }}
+                    <input type="checkbox" name="books" id="id_books_{{ forloop.counter0 }}" value="{{ book.id }}">
+                </label>
+            </div>
+        {% endfor %}
+        <button type="submit">Create Readlist</button>
+    </form>
+
+    <!-- <div id="result"></div>
+
+    <script>
+        $(document).ready(function () {
+            $('#create-readlist-form').on('submit', function (e) {
+                e.preventDefault();
+                $.ajax({
+                    type: 'POST',
+                    url: '/create_readlist/',  // Replace with the URL for your create_readlist view
+                    data: $(this).serialize(),
+                    success: function (response) {
+                        $('#result').html(response);
+                    }
+                });
+            });
+        });
+    </script> -->
+</body>
+
+{% endblock content %}
