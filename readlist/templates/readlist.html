@@ -7,11 +7,11 @@
 </head>
 <body>
     <h1>Top 5 Readlists</h1>
-    <div class="grid grid-cols-3 gap-4">
+    <div class="grid grid-cols-5 gap-4">
         {% for readlist in top_5_readlists %}
             <div class="rounded-xl shadow-lg bg-zinc-800 relative">
                 {% if readlist.books.first %}
-                    <img class="rounded-xl overflow-hidden w-52 mt-4 ml-4" src="{{ readlist.books.first.image_link }}" alt="{{ readlist.books.first.title }}">
+                    <img class="rounded-xl overflow-hidden w-52 mt-9 ml-9" src="{{ readlist.books.first.image_link }}" alt="{{ readlist.books.first.title }}">
                 {% endif %}
                 <div class="p-4 space-y-2">
                     <h2 class="text-lg font-bold">{{ readlist.name }}</h2>

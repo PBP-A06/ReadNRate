@@ -2,8 +2,23 @@
 
 {% block content %}
 
-    <h1>Welcome back, {{User.name}}.</h1>
-    <h2>Let's read!</h2>
-    <div class="w-[1680px] h-[0px] border-2 border-white"></div>
+    <div class="text-white font-light font-['Almarai'] pl-10 ml-40 mt-40 mb-0">
+        <h1 class="w-[1236px] text-[84px]">
+            Welcome back, <u>{{ nama }}.</u>
+        </h1>
+        <h2 class="w-[1236px] text-[60px] mt-0">
+            Let's read!
+        </h2>
+        <button class="bg-[#3CB81D] text-white px-5 py-2 rounded-full hover:bg-lime-900 font-['Chivo']" href="{% url 'main:register' %}">JOIN NOW</button>
+    </div>
+    
+    <div class="items-center justify-center w-full">
+        <hr class="w-[1200px] h-1 my-8 bg-gray-200 border-0 rounded dark:bg-gray-700 ml-[100px]">
+        <div class="text-right text-white text-[17px] font-['Chivo'] mt-30 mr-[250px]">YOUR RECENT REVIEWS</div>
+    </div>
+
+    <div class="User.reviews">
+
+    </div>
 
 {% endblock content %}

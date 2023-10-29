@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class homeAndReadlists(AppConfig):
+class UserProfileConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'homeAndReadlists'
+    name = 'user_profile'
