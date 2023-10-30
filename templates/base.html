@@ -20,24 +20,12 @@
         <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400&family=Chivo:wght@700&display=swap" rel="stylesheet">
     </head>
 
-<<<<<<< HEAD
-    <!-- <body class="font-[Almarai] bg-gradient-to-t from-[#97A8B9] to-sky-950 h-screen"> -->
-    <!-- <body class="font-[Almarai] bg-sky-950"> -->
-    <body class="font-[Almarai] bg-zinc-900 m-0">
-        <!-- <header class="bg-[#272727]"> -->
-        <header class="bg-zinc-800">
-            <nav class="flex justify-between items-center w-[92%] mx-auto py-2">
-                <div>
-                    <a href="{% url 'show_main' %}">
-                        <img class="w-16 cursor-pointer text-white" src="logolong.png" alt="ReadNRateLogo">
-=======
     <body class="font-[Almarai] bg-gradient-to-t from-[#97A8B9] to-[#323539] h-screen">
         <header class="bg-[#272727]">
             <nav class="flex justify-between items-center w-[92%]  mx-auto shadow-xl">
                 <div>
                     <a  href="{% url 'home:show_home' %}">
                         <img class="w-16 cursor-pointer ml-15" src="{% static '/logo/logo.png' %}" alt="ReadNRateLogo">
->>>>>>> 6a1c430d01e2a239e09ffe14e7815a9c2d29f0be
                     </a>
                 </div>
                 <div
@@ -55,17 +43,12 @@
                     </ul>
                 </div>
                 <div class="flex items-center gap-6">
-<<<<<<< HEAD
-                    <button class="bg-gray-300 text-black h-9 px-4 py-1 rounded-full hover:bg-gray-400">Sign In</button>
-                    <ion-icon onclick="onToggleMenu(this)" name="menu" class="text-3xl cursor-pointer md:hidden"></ion-icon>
-=======
                     {% if user.is_authenticated %}
                     <span class="text-slate-400 font-normal font-['Cocogoose']">{{ user.username }}</span>
                     {% else %}
                         <a class="bg-[#3CB81D] text-white px-5 py-2 rounded-full hover:bg-lime-900 font-['Chivo']" href="{% url 'main:login' %}">Sign in</a>
                     {% endif %}
                     <ion-icon onclick="onToggleMenu(this)" name="menu" class="text-3xl cursor-pointer md:hidden"></ion-icon>             
->>>>>>> 6a1c430d01e2a239e09ffe14e7815a9c2d29f0be
                 </div>
          </header>
 

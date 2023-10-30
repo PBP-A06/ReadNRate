@@ -22,15 +22,10 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('main.urls')),
-<<<<<<< HEAD
     path('leaderboard/', include('leaderboard.urls')),
     path('books/', include('book.urls')),
-    path('profile/', include('user_profile.urls'))
-=======
+    path('profile/', include('user_profile.urls')),
     path('home/', include('home.urls')),
-    path('leaderboard/', include('leaderboard.urls')),
-    path('books/', include('book.urls')),
->>>>>>> 6a1c430d01e2a239e09ffe14e7815a9c2d29f0be
 ]
 
 # Serve media files during development

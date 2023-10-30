@@ -21,25 +21,6 @@
             </button>
         </p>
     </div>
-<<<<<<< HEAD
-=======
-
-    <!-- <dialog id="exampleModal" class="modal">
-        <div class="modal-box w-11/12 max-w-5xl">
-          <h3 class="font-bold text-lg">Hello!</h3>
-          <ul>
-            {% for book in books}
-            <li></li>
-          </ul>
-          <p class="py-4">Click the button below to close</p>
-          <div class="modal-action">
-            <form method="dialog">
-              <button class="btn">Close</button>
-            </form>
-          </div>
-        </div>
-    </dialog> -->
->>>>>>> 6a1c430d01e2a239e09ffe14e7815a9c2d29f0be
     
     <div id="book_cards" class="text-white mx-3"></div>
 
@@ -68,13 +49,10 @@
             }
             return a.fields.likes - b.fields.likes;
         }
-<<<<<<< HEAD
 
         async function showDetails(pk) {
             window.open("book-id-" + pk + "/", "_blank");
         }
-=======
->>>>>>> 6a1c430d01e2a239e09ffe14e7815a9c2d29f0be
     
         // only show top 10 book and readlist
         async function refreshBooks(param) {
@@ -116,28 +94,16 @@
                             <br>
                             <br>
                             <button class="text-center bg-gray-600 text-white py-2 rounded-lg font-semibold mt-4 hover:bg-gray-400 
-<<<<<<< HEAD
                             focus:scale-95 transition-all duration-50 absolute inset-x-3 bottom-3" method="GET" onclick="showDetails(${book.pk})">
-=======
-                            focus:scale-95 transition-all duration-50 absolute inset-x-3 bottom-3">
->>>>>>> 6a1c430d01e2a239e09ffe14e7815a9c2d29f0be
                                 Details
                             </button>
                         </div>
                     </div>`
                 }
-<<<<<<< HEAD
                 htmlString += `\n</div></div>`;         
             }
             document.getElementById("book_cards").innerHTML = htmlString;
         }
-
-=======
-                htmlString += `\n</div></div>`;
-            }
-            document.getElementById("book_cards").innerHTML = htmlString;
-        }
->>>>>>> 6a1c430d01e2a239e09ffe14e7815a9c2d29f0be
         refreshBooks("rating"); // Default = by rating
     </script>
 {% endblock content %}

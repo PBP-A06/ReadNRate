@@ -1,12 +1,10 @@
 from django.shortcuts import render
-<<<<<<< HEAD
-from user_profile.models import Book
-=======
 from book.models import Book
->>>>>>> 6a1c430d01e2a239e09ffe14e7815a9c2d29f0be
 from django.core import serializers
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
+from user_profile.models import *
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 
@@ -16,7 +14,6 @@ def get_books(request):
     return HttpResponse(serializers.serialize("json", data), content_type="application/json")
 
 @csrf_exempt
-<<<<<<< HEAD
 def show_bookmarked(request):
     books = Book.objects.filter(bookmarked=True)
     context = {
@@ -32,19 +29,15 @@ def show_liked(request):
     }
     return render(request, "profile.html", context)
 
-@csrf_exempt
+
+@login_required(login_url='/login')
 def show_profile(request):
-    bookmarked = Book.objects.filter(bookmarked=True)
-    liked = Book.objects.filter(liked=True)
+    bookmarked_books = BookmarkedBook.objects.filter(user=request.user)
+    liked_books = LikedBook.objects.filter(user=request.user)
+
     context = {
-        'bookmarked':bookmarked,
-        'liked':liked,
+        'bookmarked_books': bookmarked_books,
+        'liked_books': liked_books,
     }
-=======
-def show_books(request):
-    books = Book.objects.filter(user=request.user)
-    context = {
-        'books':books,
-    }
->>>>>>> 6a1c430d01e2a239e09ffe14e7815a9c2d29f0be
-    return render(request, "profile.html", context)
+
+    return JsonResponse(context)  # Return the context as JSON
