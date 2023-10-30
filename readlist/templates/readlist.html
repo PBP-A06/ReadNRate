@@ -6,7 +6,7 @@
     <title>Top 5 Readlists</title>
 </head>
 <body>
-    <h1>Top 5 Readlists</h1>
+    <h1 class="text-3xl font-bold mb-4">Top 5 Readlists</h1>
     <div class="grid grid-cols-5 gap-4">
         {% for readlist in top_5_readlists %}
             <div class="rounded-xl shadow-lg bg-zinc-800 relative">
@@ -19,36 +19,24 @@
                     <ul>
                         {{readlist.description}}
                     </ul>
-                    <p>likes: {{readlist.likes}}</p>
-                    <button id="likeBtn">like</button>
+                    <ul>likes: {{readlist.likes}}</ul>
+                    <ul><button id="likeBtn">like</button></ul>
+                    <br>
+                    <ul>
+                        <a href="{% url 'show_readlist_by_id' pk=readlist.pk %}" class="btn text-center bg-gray-600 
+                        text-white py-2 rounded-lg font-semibold mt-4 hover:bg-gray-400 focus:scale-95 transition-all duration-50 
+                        absolute inset-x-3 bottom-3">
+                            Details
+                        </a>
+                    </ul>
                 </div>
             </div>
         {% endfor %}
     </div>
 
-    <a href="{% url 'readlist:create_readlist' %}">Create your own read list</a>
+    <a href="{% url 'readlist:create_readlist' %}" class="btn-primary">Create your own read list</a>
 </body>
 </div>
-<script>
-    document.getElementById("likeBtn").addEventListener("click", function() {
-  // Make an AJAX request to the server
-  fetch("{% url 'readlist:show_readlist' %}")
-    .then(function(response) {
-      if (response.ok) {
-        return response.text();
-      } else {
-        throw new Error("Error: " + response.status);
-      }
-    })
-    .then(function(data) {
-      // Handle the response from the server
-      console.log(data);
-    })
-    .catch(function(error) {
-      // Handle any errors that occurred during the request
-      console.error(error);
-    });
-});
-</script>
+
 
 {% endblock content %}
