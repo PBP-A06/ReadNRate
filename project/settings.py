@@ -48,6 +48,8 @@ INSTALLED_APPS = [
     'books',
     'book',
     'leaderboard',
+    'readlist',
+    'bookReview',
     'user_profile',
 ]
 

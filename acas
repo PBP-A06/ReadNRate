@@ -1,0 +1,233 @@
+[33mcommit aad60f44c1df7329463a97361af0f63166107bab[m[33m ([m[1;36mHEAD -> [m[1;32mfatih[m[33m, [m[1;31morigin/fatih[m[33m)[m
+Merge: e1cb93a b51e682
+Author: ffatihzain <fatihzain10@gmail.com>
+Date:   Sat Oct 28 23:29:31 2023 +0700
+
+    Merge branch 'fatih' of https://github.com/PBP-A06/ReadNRate into fatih
+
+[33mcommit e1cb93a784c986e20bf83f9fd02f6ed0ca5e4412[m
+Author: ffatihzain <fatihzain10@gmail.com>
+Date:   Sat Oct 28 23:25:22 2023 +0700
+
+    review & book detail start w/o css
+
+[33mcommit d31658a8c3f052569d10bc797b3e070dcc7eb9e2[m[33m ([m[1;32mmain[m[33m)[m
+Merge: 272097e 2b22d45
+Author: raviehasan <120233868+raviehasan@users.noreply.github.com>
+Date:   Sat Oct 28 14:25:55 2023 +0700
+
+    Merge pull request #3 from PBP-A06/ravie
+    
+    merge
+
+[33mcommit 2b22d4531d254669403faea0ee87f45dc2443477[m[33m ([m[1;31morigin/ravie[m[33m)[m
+Author: raviehasan <ravie.hasan@ui.ac.id>
+Date:   Sat Oct 28 14:21:49 2023 +0700
+
+    change attr name & create app leaderboard
+
+[33mcommit b51e68220e076a5d76b3903ac2fee6dbb803d512[m
+Merge: 1de4354 272097e
+Author: ffatihzain <119392824+ffatihzain@users.noreply.github.com>
+Date:   Sat Oct 28 00:33:33 2023 +0700
+
+    Merge pull request #2 from PBP-A06/dev
+    
+    dataset
+
+[33mcommit 61b80adc3ea287cf502428060b1ec38442e1c7bd[m
+Author: sorfeb <soros21febriano@gmail.com>
+Date:   Fri Oct 27 23:43:38 2023 +0700
+
+    fixed homeAndBooklists apps.py
+
+[33mcommit 04adabdf430d4257db4efa5548dcff48ab5c2584[m
+Author: sorfeb <soros21febriano@gmail.com>
+Date:   Fri Oct 27 23:31:26 2023 +0700
+
+    updated main models.py
+
+[33mcommit 184ea888cf7974c252060648ce7671f370809dc9[m
+Author: sorfeb <soros21febriano@gmail.com>
+Date:   Fri Oct 27 22:43:02 2023 +0700
+
+    tailwind initial setup
+
+[33mcommit 9c199ae03f432bc9ae5ee62e445b77a82d9b4a3d[m
+Merge: 843fba2 272097e
+Author: sorfeb <soros21febriano@gmail.com>
+Date:   Fri Oct 27 03:16:21 2023 +0700
+
+    merge from dev
+
+[33mcommit 843fba21c57812b55f1440442fe4838e5e3e64ac[m
+Author: sorfeb <soros21febriano@gmail.com>
+Date:   Fri Oct 27 03:09:58 2023 +0700
+
+    test commit
+
+[33mcommit 272097e81acd3c7fee0d207487b03b3fab0fdf56[m
+Author: raviehasan <ravie.hasan@ui.ac.id>
+Date:   Thu Oct 26 23:39:07 2023 +0700
+
+    dataset
+
+[33mcommit 8de08c473bbdd5318ddae71e76e68bf985bf3a64[m
+Merge: a676bbb a70763a
+Author: raviehasan <120233868+raviehasan@users.noreply.github.com>
+Date:   Thu Oct 26 20:56:31 2023 +0700
+
+    Merge pull request #1 from PBP-A06/ravie
+    
+    Test
+
+[33mcommit a70763a3aab0eb72e40f86b09d8e2517ebb34aea[m
+Author: raviehasan <ravie.hasan@ui.ac.id>
+Date:   Wed Oct 25 18:08:19 2023 +0700
+
+    trying out new app
+
+[33mcommit a676bbbefd64afdd821b8911cd8b7028d041ea37[m
+Author: raviehasan <ravie.hasan@ui.ac.id>
+Date:   Wed Oct 25 14:12:17 2023 +0700
+
+    test app
+
+[33mcommit 1de43546b94f7a6aeade5d48801f0015ff7786cc[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/daffa[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: raviehasan <120233868+raviehasan@users.noreply.github.com>
+Date:   Thu Oct 12 00:00:26 2023 +0700
+
+    Update README.md
+
+[33mcommit 4ac96f7ccf1c9a4b32267bb3f8a08d5d8294ca1d[m
+Author: raviehasan <120233868+raviehasan@users.noreply.github.com>
+Date:   Wed Oct 11 23:59:56 2023 +0700
+
+    Update README.md
+
+[33mcommit dd5a9aa450e0dcac8eb5a4c61ecb042dab01b768[m
+Author: raviehasan <120233868+raviehasan@users.noreply.github.com>
+Date:   Wed Oct 11 23:54:28 2023 +0700
+
+    Update README.md
+
+[33mcommit d09de14d2e0f40a34263f6afd20f4bcfba395c1d[m
+Author: raviehasan <120233868+raviehasan@users.noreply.github.com>
+Date:   Wed Oct 11 23:53:38 2023 +0700
+
+    Update README.md
+
+[33mcommit 50ec338c49b7a4657c1a9ea07688582c0173fd88[m
+Author: raviehasan <120233868+raviehasan@users.noreply.github.com>
+Date:   Wed Oct 11 14:41:20 2023 +0700
+
+    Update README.md
+
+[33mcommit b807137a55ac86d006ae697cb9498b330225925e[m
+Author: ffatihzain <119392824+ffatihzain@users.noreply.github.com>
+Date:   Wed Oct 11 11:40:01 2023 +0700
+
+    Update README.md
+
+[33mcommit f6a7edbb08b32f6ffe319e3885a326d55a840b99[m
+Author: raviehasan <120233868+raviehasan@users.noreply.github.com>
+Date:   Wed Oct 11 11:37:19 2023 +0700
+
+    Update README.md
+
+[33mcommit a20529db7bdf4458ab2ba3571aa021668c1b4404[m
+Author: sorfeb <112263712+sorfeb@users.noreply.github.com>
+Date:   Wed Oct 11 11:33:58 2023 +0700
+
+    Update README.md
+
+[33mcommit 0387edba02130297e370588226a0d396b854ced0[m
+Author: sorfeb <112263712+sorfeb@users.noreply.github.com>
+Date:   Wed Oct 11 11:33:00 2023 +0700
+
+    Update README.md
+
+[33mcommit 4db4b953e1070f79369e1877afbcb7ed59d740f2[m
+Author: sorfeb <112263712+sorfeb@users.noreply.github.com>
+Date:   Wed Oct 11 11:32:21 2023 +0700
+
+    Update README.md
+
+[33mcommit 17927a9fd918df986825fa2362e27ceb21062dba[m
+Author: sorfeb <112263712+sorfeb@users.noreply.github.com>
+Date:   Wed Oct 11 11:30:25 2023 +0700
+
+    Update README.md
+
+[33mcommit 891e711459b731a9a2aa4867da1812396eb9e28d[m
+Merge: e13403a bd077d5
+Author: ArditheusIH <arditheus.immanuel@gmail.com>
+Date:   Wed Oct 11 11:28:18 2023 +0700
+
+    Merge branch 'main' of https://github.com/PBP-A06/test-repo
+
+[33mcommit e13403aeb4e6aafce4a0fcdeafdfb33609b5aedc[m
+Author: ArditheusIH <arditheus.immanuel@gmail.com>
+Date:   Wed Oct 11 11:21:40 2023 +0700
+
+    Django project base code
+
+[33mcommit bd077d5ccc95819522d9a0b3fdfeaf0fdc785391[m
+Author: sorfeb <112263712+sorfeb@users.noreply.github.com>
+Date:   Wed Oct 11 10:35:50 2023 +0700
+
+    Update README.md
+
+[33mcommit 21b88231323f8de6ac96737f20333eb29bca4de4[m
+Author: DaffaAlFathan <124992157+DaffaAlFathan@users.noreply.github.com>
+Date:   Wed Oct 11 10:32:19 2023 +0700
+
+    Update README.md
+
+[33mcommit e06082842e8172d9d1e4e453930b5c5f427e1cf9[m
+Author: sorfeb <112263712+sorfeb@users.noreply.github.com>
+Date:   Wed Oct 11 10:29:17 2023 +0700
+
+    Update README.md
+
+[33mcommit 780963d9048a7ec71a921a8844bf42f9af581986[m
+Author: ffatihzain <119392824+ffatihzain@users.noreply.github.com>
+Date:   Tue Oct 10 14:30:50 2023 +0700
+
+    Update README.md
+
+[33mcommit b8a8408b632410e65f2707d14b7434094e84791c[m
+Author: ArditheusIH <124979797+ArditheusIH@users.noreply.github.com>
+Date:   Mon Oct 9 17:52:25 2023 +0700
+
+    Update README.md
+
+[33mcommit 8330f5e8ad63c0d6a3c8c4bc567e9d9c89de4083[m
+Author: raviehasan <120233868+raviehasan@users.noreply.github.com>
+Date:   Mon Oct 9 14:37:34 2023 +0700
+
+    Update README.md
+
+[33mcommit df9ac9858c7122c62bfe9e801cb5ba30b64f9866[m
+Author: ffatihzain <119392824+ffatihzain@users.noreply.github.com>
+Date:   Mon Oct 9 14:35:33 2023 +0700
+
+    Update README.md
+
+[33mcommit 1bc5e2acf7c5eccfac4f05888f099f2cf9eea6e3[m
+Author: sorfeb <112263712+sorfeb@users.noreply.github.com>
+Date:   Mon Oct 9 14:34:32 2023 +0700
+
+    Update README.md
+
+[33mcommit c392a3f416bd3fa3d1d42e94efd08f9805904271[m
+Author: sorfeb <112263712+sorfeb@users.noreply.github.com>
+Date:   Mon Oct 9 14:33:11 2023 +0700
+
+    Update README.md
+
+[33mcommit 18bff092bedb347a99a26026e5a6760108ce1b48[m
+Author: sorfeb <112263712+sorfeb@users.noreply.github.com>
+Date:   Mon Oct 9 14:05:50 2023 +0700
+
+    Initial commit

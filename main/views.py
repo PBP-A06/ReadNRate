@@ -17,10 +17,8 @@ from user_profile.models import User
 def show_main(request):
     books = Book.objects.all()
     context = {
-        'books':books,
+        'test':'testing'
     }
-    return render(request, "main.html", context)
-
     return render(request, "main.html", context)
 
 def login_user(request):

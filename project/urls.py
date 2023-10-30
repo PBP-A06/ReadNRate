@@ -18,14 +18,17 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+# from bookReview.views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('home/', include('home.urls')),
     path('', include('main.urls')),
     path('leaderboard/', include('leaderboard.urls')),
+    path('', include('bookReview.urls')),
     path('books/', include('book.urls')),
     path('profile/', include('user_profile.urls')),
-    path('home/', include('home.urls')),
+    path('readlist/', include('readlist.urls')),
 ]
 
 # Serve media files during development
