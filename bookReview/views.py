@@ -24,7 +24,8 @@ def show_book_detail(request, id):
         form = ReviewForm()
 
     has_liked = request.user in book.liked_by.all()
-    context = {'book': book, 'reviews': reviews, 'form': form, 'bookId': id, 'has_liked': has_liked, 'total_likes': book.liked_by.count()}
+    has_bookmarked = request.user in book.bookmarked_by.all()
+    context = {'book': book, 'reviews': reviews, 'form': form, 'bookId': id, 'has_liked': has_liked, 'has_bookmarked': has_bookmarked, 'total_likes': book.liked_by.count()}
     return render(request, 'book_detail.html', context)
 
 @login_required
@@ -39,15 +40,16 @@ def add_review_ajax(request, id):
             review_text=review_text,
         )
 
-        return JsonResponse({'success': True, 'review_text': review_text})
+        return JsonResponse({'success': True, 'review_text': review_text, 'username': request.user.username})
     
     return JsonResponse({'success': False, 'error': 'Invalid request method'})
+
 
 
 @login_required
 @csrf_exempt
 def submit_review(request):
-    if request.method == 'POST' and request.is_ajax():
+    if request.method == 'POST' and request.headers.get('X-Requested-With') == 'XMLHttpRequest':
         review_text = request.POST.get('review_text')
         book_id = request.POST.get('book_id')
         review = Review(review_text=review_text, book_id=book_id)
@@ -57,12 +59,11 @@ def submit_review(request):
     else:
         return JsonResponse({'success': False, 'error': 'Invalid request method'})
 
+
 @csrf_exempt
-def toggle_bookmark(request):
+def toggle_bookmark(request, id):  # Tambahkan parameter 'id'
     if request.method == "POST":
-        book_id = request.POST.get('book_id')
-        book = get_object_or_404(Book, id=book_id)
-        
+        book = get_object_or_404(Book, pk=id)
         if request.user in book.bookmarked_by.all():
             book.bookmarked_by.remove(request.user)
         else:
