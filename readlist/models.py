@@ -8,5 +8,5 @@ class Readlist(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
     description = models.TextField(default="")
-    books = models.ManyToManyField(Book)
+    books = models.ManyToManyField(Book, blank=True, related_name='readlist_books')
     likes = models.IntegerField(default=0)
