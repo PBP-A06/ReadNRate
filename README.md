@@ -51,7 +51,6 @@ Kami menyediakan dan menganalisis lebih dari 100 buku untuk anda nilai dan juga 
     - Menampilkan _navigation bar_ yang mengarah ke list seluruh buku, readlist, leaderboard, dan sign in atau sign up.
 7. **Register dan Sign In**
     - Autentikasi dan otorisasi pengguna
-8. 
 <hr>
 
 ## 4. Roles 
