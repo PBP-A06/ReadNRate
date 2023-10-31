@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="rounded-xl shadow-lg bg-zinc-800 relative text-white mx-10 mb-5 mt-10 flex items-center justify-center">
+    <div class="p-6 flex flex-row">
+        <div class="m-auto ml-10">
+            <p class="mb-1">
+                Name&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp: {{readlist.name}} <br>
+            </p>
+            <p class="mb-1">
+                Likes&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp: {{readlist.likes}} <br>
+            </p>
+            <p class="mb-1">
+                Description&nbsp: {{readlist.description}} <br>
+            </p>
+        </div>
+    </div>
+</div>
+
+<p class="text-white text-xl text-center">
+    Book(s) in this Readlist:
+</p>
+
+<div class="flex items-center justify-content-center container mx-auto my-8">
+    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-5">
+        {% for book in books %}
+            <div class="rounded-xl shadow-lg bg-zinc-800 relative">
+                <div class="p-5 flex flex-col">
+                    <img src="{{book.image_link}}" alt="Cover for {{book.title}}" 
+                    class="rounded-xl overflow-hidden w-52">
+                    <p class="text-m md:text-m font-medium mt-3 text-white">
+                        {{book.title}}
+                        <br>
+                        -- {{book.category}}
+                    </p>
+                    <br>
+                    <br>
+                    <button class="text-center bg-gray-600 text-white py-2 rounded-lg font-semibold mt-4 hover:bg-gray-400 
+                    focus:scale-95 transition-all duration-50 absolute inset-x-3 bottom-3" method="GET" onclick="window.location.href='/book/{{book.pk}}/'">
+                        Details
+                    </button>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock content %}

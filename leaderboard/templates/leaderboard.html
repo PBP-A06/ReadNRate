@@ -1,0 +1,201 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <div class="text-white my-5 mx-3 text-center">
+        
+        <p id="sorting" class="text-5xl text-center mb-0">Leaderboard by Rating</p>
+
+        <p class="mt-3 text-xl">Change to sort by?&nbsp   
+            
+            <button id="rating-10" onclick="refreshBooks('rating', 10)"
+            class="bg-gray-600 hover:bg-gray-400 text-white h-8 font-bold py-1 px-3 rounded-full text-base">
+                Rating (Top 10)
+            </button>
+        
+            <button id="rating-100" onclick="refreshBooks('rating', 100)"
+            class="bg-gray-600 hover:bg-gray-400 text-white h-8 font-bold py-1 px-3 rounded-full text-base">
+                Rating (Top 100)
+            </button>
+
+            <button id="likes-10" onclick="refreshBooks('likes', 10)"  
+            class="bg-gray-600 hover:bg-gray-400 text-white h-8 font-bold py-1 px-3 rounded-full text-base">
+                Likes (Top 10)
+            </button>
+    
+            <button id="likes-100" onclick="refreshBooks('likes', 100)"  
+            class="bg-gray-600 hover:bg-gray-400 text-white h-8 font-bold py-1 px-3 rounded-full text-base">
+                Likes (Top 100)
+            </button>
+
+    
+            <button id="readlist" onclick="refreshBooks('readlist', 10)"
+            class="bg-gray-600 hover:bg-gray-400 text-white h-8 font-bold py-1 px-3 rounded-full text-base">
+                Readlist (Top 10)
+            </button>
+
+        </p>
+        <p>{{halo}}</p>
+        
+        <div>
+            <form method="POST" action="" class="mt-7 ml-16">
+                {% csrf_token %}
+                <p>
+                    <div>
+                        <p class="text-white text-start">
+                            {{form.search.label}}
+                        </p>      
+                        <div class="text-black mt-3 flex flex-col-3">
+                            <select name="select" class="w-44 overflow-hidden">
+                                {% for pk, title in form.search.help_text %}
+                                    <option class="text-black">{{title}}</option>
+                                {% endfor %}
+                            </select>
+                            <input type="submit" class="mx-3 button bg-gray-600 hover:bg-gray-400 text-white 
+                            h-8 font-bold py-1 px-3 rounded-full text-base" value="Submit">
+                            <p id="rank" class="text-white">"{{book}}" is currently ranked {{rank}}</p>
+                        </div>
+                    </div>
+                </p>
+            </form>
+        </div>
+    </div>
+    
+    <div id="book_cards" class="text-white mx-3"></div>
+
+    <script>
+        // ajax get
+        async function getBooks() {
+            return fetch("{% url 'get_books' %}").then((res) => res.json());
+        }
+
+        async function getReadlists() {
+            return fetch("{% url 'get_readlists' %}").then((res) => res.json());
+        }
+
+        // sort by stars. if the stars is equal => ascending by title
+        function compareByRating(a, b) {
+            if (a.fields.stars == b.fields.stars) {
+                return b.fields.title.localeCompare(a.fields.title);
+            }
+            return a.fields.stars - b.fields.stars;
+        }
+
+        // sort by likes. if the likes is equal => ascending by title
+        function compareByLikes(a, b) {
+            if (a.fields.likes == b.fields.likes) {
+                return b.fields.title.localeCompare(a.fields.title);
+            }
+            return a.fields.likes - b.fields.likes;
+        }
+
+        function compareReadlistByLikes(a, b) {
+            if (a.fields.likes == b.fields.likes) {
+                return b.fields.name.localeCompare(a.fields.name);
+            }
+            return a.fields.likes - b.fields.likes;
+        }
+
+        async function showDetails(pk) {
+            window.open("book-id-" + pk + "/", "_blank");
+        }
+
+        async function showDetailsReadlist(pk) {
+            window.open("readlist-id-" + pk + "/", "_blank");
+        }
+    
+        // only show top 10 book and readlist
+        async function refreshBooks(param, totalToShow) {
+            document.getElementById("book_cards").innerHTML = "";           
+            let htmlString = `<div class="flex items-center justify-content-center container mx-auto my-8">
+                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-5">`;
+
+            if (param.match("readlist")) {
+                document.getElementById("sorting").innerHTML = `\n<p class="text-center mt-0 text-5xl mb-0">Leaderboard by Readlist Likes</p>`;
+                const readlists = await getReadlists(); 
+                readlists.sort(compareReadlistByLikes);
+                readlists.reverse();
+
+                // show top 10 readlists only
+                for (let i = 0; i < 10; i++) {
+                    if (i == readlists.length) {
+                        break;
+                    }
+                    readlist = readlists[i];
+                    htmlString += `\n
+                    <div class="rounded-xl shadow-lg bg-zinc-800 relative">
+                        <div class="p-5 flex flex-col max-w-sm overflow-hidden">
+                            <p class="text-xl md:text-xl font-medium text-white">
+                                ${i+1}. ${readlist.fields.name}
+                            </p>
+                            <p class="text-m md:text-m font-medium mt-2 text-white">
+                                Total Likes: ${readlist.fields.likes}
+                            </p>
+                            <p class="text-m md:text-m font-medium mt-2 text-white">
+                                Description: ${readlist.fields.description}
+                            </p>
+                            <br>
+                            <br>
+                            <button class="text-center bg-gray-600 text-white py-2 rounded-lg font-semibold mt-4 hover:bg-gray-400 
+                            focus:scale-95 transition-all duration-50 absolute inset-x-3 bottom-3" method="GET" onclick="showDetailsReadlist(${readlist.pk})">
+                                Details
+                            </button>
+                        </div>
+                    </div>`
+                }
+                htmlString += `\n</div></div>`;  
+                document.getElementById("book_cards").innerHTML = htmlString;       
+            
+            } else {
+                const books = await getBooks();
+                if (param.match("likes")) {
+                    books.sort(compareByLikes);
+                    books.reverse();
+                    if (totalToShow == 10) {
+                        document.getElementById("sorting").innerHTML = `\n<p class="text-center mt-0 text-5xl mb-0">Leaderboard by Likes (Top 10)</p>`;
+                    } else {
+                        document.getElementById("sorting").innerHTML = `\n<p class="text-center mt-0 text-5xl mb-0">Leaderboard by Likes (Top 100)</p>`;
+                    }
+                } else if (param.match("rating")) {
+                    books.sort(compareByRating);
+                    books.reverse();
+                    if (totalToShow == 10) {
+                        document.getElementById("sorting").innerHTML = `\n<p class="text-center mt-0 text-5xl mb-0">Leaderboard by Rating (Top 10)</p>`;
+                    } else {
+                        document.getElementById("sorting").innerHTML = `\n<p class="text-center mt-0 text-5xl mb-0">Leaderboard by Rating (Top 100)</p>`;
+                    }
+                }
+                // show top 10 books only
+                for (let i = 0; i < totalToShow; i++) {
+                    book = books[i];
+                    htmlString += `\n
+                    <div class="rounded-xl shadow-lg bg-zinc-800 relative">
+                        <div class="p-5 flex flex-col">
+                            <img src="${book.fields.image_link}" alt="Cover for ${book.fields.title}" 
+                            class="rounded-xl overflow-hidden w-52">
+                            <p class="text-m md:text-m font-medium mt-3 text-white">
+                                ${i+1}. ${book.fields.title}
+                                <br>
+                                -- ${book.fields.category}
+                            </p>
+                            <br>
+                            <br>
+                            <button class="text-center bg-gray-600 text-white py-2 rounded-lg font-semibold mt-4 hover:bg-gray-400 
+                            focus:scale-95 transition-all duration-50 absolute inset-x-3 bottom-3" method="GET" onclick="window.location.href='/book/${book.pk}/'">
+                                Details
+                            </button>
+                        </div>
+                    </div>`
+                }
+                htmlString += `\n</div></div>`;   
+                document.getElementById("book_cards").innerHTML = htmlString;      
+            }
+        }
+
+        $(document).ready(function() {
+            refreshBooks("rating", 10); // Default = by rating
+        });
+        
+    </script>
+{% endblock content %}
