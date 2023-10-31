@@ -11,14 +11,14 @@ from book.models import Book
 from django.core import serializers
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
+from user_profile.models import User
 
 @csrf_exempt
 def show_main(request):
     books = Book.objects.all()
     context = {
-        'books':books,
+        'test':'testing'
     }
-
     return render(request, "main.html", context)
 
 def login_user(request):
@@ -48,7 +48,13 @@ def register(request):
     if request.method == "POST":
         form = UserCreationForm(request.POST)
         if form.is_valid():
-            form.save()
+            user = form.save()
+            # Create a corresponding UserProfileUser instance
+            User.objects.create(
+                username=user.username,
+                # profile_name=user.username,  # You can adjust this field as needed
+                # name=user.username  # You can adjust this field as needed
+            )
             messages.success(request, 'Your account has been successfully created!')
             return redirect('main:login')
     context = {'form':form}

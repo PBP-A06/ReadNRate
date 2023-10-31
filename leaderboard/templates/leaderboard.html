@@ -169,7 +169,7 @@
                 // show top 10 books only
                 for (let i = 0; i < totalToShow; i++) {
                     book = books[i];
-                    htmlString += `\n
+                    htmlString += `
                     <div class="rounded-xl shadow-lg bg-zinc-800 relative">
                         <div class="p-5 flex flex-col">
                             <img src="${book.fields.image_link}" alt="Cover for ${book.fields.title}" 
@@ -186,7 +186,7 @@
                                 Details
                             </button>
                         </div>
-                    </div>`
+                    </div>`;
                 }
                 htmlString += `\n</div></div>`;   
                 document.getElementById("book_cards").innerHTML = htmlString;      

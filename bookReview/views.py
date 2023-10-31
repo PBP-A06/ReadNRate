@@ -7,12 +7,6 @@ from django.http import HttpResponse, JsonResponse, HttpResponseNotFound
 from django.core import serializers
 from django.views.decorators.csrf import csrf_exempt
 
-# def get_books_by_id(request, id):
-#     data = Book.objects.filter(pk=id)
-#     data_json = serializers.serialize("json", data)
-#     return HttpResponse(data_json, content_type="application/json")
-
-# @login_required
 def show_book_detail(request, id):
     book = get_object_or_404(Book, pk=id)
     reviews = Review.objects.filter(book=book)
@@ -29,11 +23,12 @@ def show_book_detail(request, id):
     else:
         form = ReviewForm()
 
-    # Menambahkan bookId ke dalam konteks
-    context = {'book': book, 'reviews': reviews, 'form': form, 'bookId': id}
-
+    has_liked = request.user in book.liked_by.all()
+    has_bookmarked = request.user in book.bookmarked_by.all()
+    context = {'book': book, 'reviews': reviews, 'form': form, 'bookId': id, 'has_liked': has_liked, 'has_bookmarked': has_bookmarked, 'total_likes': book.liked_by.count()}
     return render(request, 'book_detail.html', context)
 
+@login_required
 @csrf_exempt
 def add_review_ajax(request, id):
     if request.method == 'POST':
@@ -45,45 +40,49 @@ def add_review_ajax(request, id):
             review_text=review_text,
         )
 
-        return HttpResponse(b"CREATED", status=201)
+        return JsonResponse({'success': True, 'review_text': review_text, 'username': request.user.username})
     
-    return HttpResponseNotFound()
+    return JsonResponse({'success': False, 'error': 'Invalid request method'})
 
+
+
+@login_required
+@csrf_exempt
 def submit_review(request):
-    if request.method == 'POST' and request.is_ajax():
+    if request.method == 'POST' and request.headers.get('X-Requested-With') == 'XMLHttpRequest':
         review_text = request.POST.get('review_text')
         book_id = request.POST.get('book_id')
-        review = Review(text=review_text, book_id=book_id)
+        review = Review(review_text=review_text, book_id=book_id)
         review.save()
 
         return JsonResponse({'success': True, 'review_text': review_text})
     else:
         return JsonResponse({'success': False, 'error': 'Invalid request method'})
 
-def toggle_bookmark(request):
+
+@csrf_exempt
+def toggle_bookmark(request, id):  # Tambahkan parameter 'id'
     if request.method == "POST":
-        book_id = request.POST.get('book_id')
-        # user = request.user
+        book = get_object_or_404(Book, pk=id)
+        if request.user in book.bookmarked_by.all():
+            book.bookmarked_by.remove(request.user)
+        else:
+            book.bookmarked_by.add(request.user)
+
+        book.save()
         return JsonResponse({'status': 'success'})
     return JsonResponse({'status': 'error'})
 
-def toggle_like(request):
-    if request.method == "POST":
-        review_id = request.POST.get('review_id') # Ganti dari book_id ke review_id
-        try:
-            review = Review.objects.get(id=review_id)
-            
-            # Toggle likes_count (untuk contoh ini, saya hanya menaikkan jumlah likes)
-            review.likes_count += 1
-            review.save()
-            
-            return JsonResponse({'status': 'success', 'likes': review.likes_count})
-        except Review.DoesNotExist:
-            return JsonResponse({'status': 'error', 'message': 'Review not found.'})
-    return JsonResponse({'status': 'error', 'message': 'Invalid request method.'})
+@csrf_exempt
+def toggle_like(request, id):
+    if request.method == 'POST':
+        book = get_object_or_404(Book, pk=id)
+        if request.user in book.liked_by.all():
+            book.liked_by.remove(request.user)
+        else:
+            book.liked_by.add(request.user)
 
+        book.save()  # Tambahkan baris ini untuk menyimpan perubahan
 
-# def get_book_json(request, book_id):
-#     book = Book.objects.get(id=book_id)
-#     data = serializers.serialize("json", [book, ])
-#     return HttpResponse(data, content_type="application/json")
+        total_likes = book.liked_by.count()  # Menghitung jumlah like yang diperbarui
+        return JsonResponse({'status': 'success', 'total_likes': total_likes})

@@ -2,12 +2,36 @@
 
 {% block content %}
 
-<div class="container mx-auto mt-8 p-4 bg-white shadow-lg">
+{% if request.user in book.bookmarked_by.all %}
+    <head>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <meta name="csrfmiddlewaretoken" content="{{ csrf_token }}">
+    </head>
+
+{% endif %}
+
+<style>
+    #like-icon.liked {
+        fill: red;
+    }
+    #like-count-combined {
+        margin-top: 5px;
+        border: 1px solid gray;
+        padding: 2px 6px;
+        border-radius: 5px;
+    }
+    #review-button, #submit-review-ajax {
+    padding: 8px 16px;
+    font-size: 14px;
+    }
+</style>
+
+<div class="container mx-auto my-8 p-4 bg-zinc-800 text-white shadow-lg">
     <div class="flex flex-wrap">
         <div class="w-full md:w-1/3 text-center md:text-left">
             <img src="{{ book.image_link }}" alt="{{ book.title }}" class="w-64 h-auto mx-auto">
             <div class="text-center mt-4">
-                <button id="bookmark-button" data-book="{{ book.id }}" class="bg-[#3CB81D] text-white h-9 px-4 py-1 rounded-full hover:bg-lime-900 mt-4">
+                <button id="bookmark-button" data-book="{{ book.id }}" class="bg-gray-600 hover:bg-gray-400 text-white h-9 px-4 py-1 rounded-full mt-4">
                     <span class="flex items-center justify-center space-x-2">
                         <svg id="bookmark-icon" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="w-5 h-5">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 011.186 0z"></path>
@@ -15,52 +39,45 @@
                         Bookmark
                     </span>
                 </button>
-                <button id="like-button" data-book="{{ book.id }}" class="bg-[#3CB81D] text-white h-9 px-4 py-1 rounded-full hover:bg-lime-900 ml-2 mt-4">
+                
+                <button id="like-button-combined" data-id="{{ book.id }}" class="bg-gray-600 hover:bg-gray-400 text-white h-9 px-4 py-1 rounded-full ml-2 mt-4 {% if has_liked %}liked{% else %}unliked{% endif %}">
                     <span class="flex items-center space-x-2">
-                        <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="w-5 h-5">
+                        <svg id="like-icon" fill="{% if has_liked %}red{% else %}none{% endif %}" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="w-5 h-5">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"></path>
                         </svg>
                         Like
                     </span>
                 </button>
+                </br>
+                <p id="like-count-combined">{{ total_likes }} Likes</p>
             </div>
         </div>
         <div class="w-full md:w-2/3 md:pl-4 border-r pr-4">
             <div class="w-[90%]">
                 <h1 class="text-2xl font-bold mt-2">{{ book.title }}</h1>
-                <p class="text-gray-600 mt-4">{{ book.book_description }}</p>
+                <p class="text-grey-200 mt-4">{{ book.book_description }}</p>
             </div>
 
-            <button id="review-button" class="bg-[#3CB81D] text-white h-9 px-4 py-1 rounded-full hover:bg-lime-900 mt-4 mb-4">Review</button>
-
+            <button id="review-button" class="bg-gray-600 hover:bg-gray-400 text-white h-9 px-4 py-1 rounded-full mt-4 mb-4">Review</button>
 
             <div id="review-form" style="display: none;">
                 <form id="review-form">
                     {% csrf_token %}
-                    <textarea id="review-text" name="review_text" required class="w-full p-2 border border-gray-300 rounded focus:ring focus:ring-[#3CB81D]"></textarea>
-                    <button id="submit-review-ajax" type="button" class="bg-[#3CB81D] text-white h-9 px-4 py-1 rounded-full hover:bg-lime-900 mt-4">Submit Review</button>
+                    <textarea id="review-text" name="review_text" required class="w-full p-2 border border-gray-600 text-black rounded focus:ring focus:ring-gray-400"></textarea>
+                    <button id="submit-review-ajax" type="button" class="bg-gray-600 hover:bg-gray-400 text-white h-9 px-4 py-1 rounded-full mt-4">Submit Review</button>
                 </form>
             </div>
 
-            <div class="mt-8 border-t-2 border-gray-300 pt-4">
+            <div class="mt-8 border-t-2 border-gray-600 pt-4">
                 <div id="reviews">
                     {% for review in reviews %}
-                        <div class="flex flex-col border-b-2 border-gray-300 pb-4 mb-4"> <!-- Container untuk satu review -->
-                            <h2 class="font-semibold mb-2">Review by xxx</h2>
-                            <p class="text-gray-600 w-full">{{ review.review_text }}</p>
+                        <div class="flex flex-col border-b-2 border-gray-600 pb-4 mb-4"> <!-- Container untuk satu review -->
+                            <h2 class="font-semibold mb-2">Review by {{ review.user.username }}</h2>
+                            <p class="text-white-600 w-full">{{ review.review_text }}</p>
                         </div>
                     {% endfor %}
                 </div>
             </div>
-            
-            <!-- <div id="review-form" style="display: none;">
-                <form id="review-form" class="mt-4">
-                    {% csrf_token %}
-                    <input type="number" name="rating" min="1" max="5" required class="w-full p-2 border border-gray-300 rounded focus:ring focus:ring-[#3CB81D]">
-                    <textarea name="review_text" required class="w-full p-2 border border-gray-300 rounded focus:ring focus:ring-[#3CB81D]"></textarea>
-                    <button id="submit-review" type="submit" class="bg-[#3CB81D] text-white h-9 px-4 py-1 rounded-full hover-bg-lime-900 mt-4">Submit</button>
-                </form>
-            </div> -->
         </div>
     </div>
 </div>
@@ -82,77 +99,90 @@
     const reviewsContainer = document.getElementById("reviews");
     submitButton.addEventListener('click', () => {
         const reviewText = document.getElementById("review-text").value;
-        // Membuat kontainer review
-        const reviewDiv = document.createElement("div");
-        reviewDiv.className = "flex flex-col border-b-2 border-gray-300 pb-4 mb-4";
+        const bookId = document.getElementById("bookmark-button").getAttribute('data-book');
+        fetch(`/add_review/${bookId}/`, {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value,
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: 'review_text=' + encodeURIComponent(reviewText)
+        })
+        .then(response => response.json())
+        .then(data => {
+            if(data.success) {
+                const reviewDiv = document.createElement("div");
+                reviewDiv.className = "flex flex-col border-b-2 border-gray-600 pb-4 mb-4";
 
-        // Tambahkan judul review
-        const reviewTitle = document.createElement("h2");
-        reviewTitle.className = "font-semibold mb-2";
-        reviewTitle.textContent = "Review by xxx";
-        reviewDiv.appendChild(reviewTitle);
+                const reviewTitle = document.createElement("h2");
+                reviewTitle.className = "font-semibold mb-2";
+                reviewTitle.textContent = "Review by " + data.username;
+                reviewDiv.appendChild(reviewTitle);
 
-        // Tambahkan teks review
-        const reviewParagraph = document.createElement("p");
-        reviewParagraph.className = "text-gray-600 w-full";
-        reviewParagraph.textContent = reviewText;
-        reviewDiv.appendChild(reviewParagraph)
-        
-        // Tambahkan kontainer review dan teks review ke dalam container utama
-        reviewsContainer.appendChild(reviewDiv);
+                const reviewParagraph = document.createElement("p");
+                reviewParagraph.className = "text-gray-400 w-full";
+                reviewParagraph.textContent = reviewText;
+                reviewDiv.appendChild(reviewParagraph)
 
-        // Reset isi dari textfield review
-        document.getElementById("review-text").value = '';
+                reviewsContainer.appendChild(reviewDiv);
+                
+                document.getElementById("review-text").value = '';
+            }
+        });
     });
+
 
     document.getElementById('bookmark-button').addEventListener('click', function() {
-        let bookId = this.getAttribute('data-book');
+        const bookId = document.getElementById("bookmark-button").getAttribute('data-book');
         let bookmarkIcon = document.getElementById('bookmark-icon');
 
-        fetch('/toggle_bookmark/', {
+        fetch(`/toggle_bookmark/${bookId}/`, {
             method: 'POST',
             headers: {
-                'X-CSRFToken': '{{ csrf_token }}',
-                'Content-Type': 'application/json',
+                'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value,
             },
-            body: JSON.stringify({'book_id': bookId})
         })
         .then(response => response.json())
         .then(data => {
-            if (data.status === 'success') {
-                bookmarkIcon.style.fill = 'yellow'; // Ubah warna ikon menjadi kuning
+            if(data.status === 'success') {
+                if (bookmarkIcon.getAttribute("fill") === "yellow") {
+                    bookmarkIcon.setAttribute("fill", "none");
+                } else {
+                    bookmarkIcon.setAttribute("fill", "yellow");
+                }
             }
         });
     });
 
-    document.getElementById('like-button').addEventListener('click', function() {
-        let bookId = this.getAttribute('data-book');
-        
-        fetch('/toggle_like/', {
+
+    document.getElementById('like-button-combined').addEventListener('click', function() {
+        const bookId = this.getAttribute('data-id');
+        fetch(`/toggle_like/${bookId}/`, {
             method: 'POST',
             headers: {
-                'X-CSRFToken': '{{ csrf_token }}',
+                'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value,
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({'book_id': bookId})
         })
         .then(response => response.json())
         .then(data => {
-            if (data.status === 'success') {
-                // Ubah warna ikon menjadi merah dan update jumlah like
-                // Anda dapat menambahkan elemen untuk menampilkan jumlah like jika diperlukan
+            if(data.status === 'success') {
+                const likeCountElement = document.getElementById('like-count-combined');
+                likeCountElement.textContent = `${data.total_likes} Likes`;
+
+                let likeIcon = document.getElementById('like-icon');
+                if(likeIcon.getAttribute("fill") === "red") {
+                    likeIcon.setAttribute("fill", "none");
+                } else {
+                    likeIcon.setAttribute("fill", "red");
+                }
+            } else {
+                console.error('Failed to toggle like');
             }
-        });
+        })
+        .catch(error => console.error('Error:', error));
     });
+
+
 </script>
-
-
-<style>
-    /* Mengatur ukuran tombol review dan submit review */
-    #review-button, #submit-review-ajax {
-        padding: 8px 16px;
-        font-size: 14px;
-    }
-</style>
-
 {% endblock %}
