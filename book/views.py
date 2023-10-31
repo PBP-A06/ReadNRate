@@ -3,6 +3,7 @@ from django.core import serializers
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from book.models import Book
+from leaderboard.views import *
 
 @csrf_exempt
 def get_books(request):

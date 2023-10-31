@@ -1,18 +1,13 @@
 {% extends 'base.html' %}
 
-{% block meta %}
-    <style>
-
-    </style>
-{% endblock meta %}
-
 {% block content %}
     <div class="text-white my-5 mx-3 text-center">
-        <p id="sorting" class="text-5xl text-center mb-0">Leaderboard by Rating (stars)</p>
         
-        <p class="mt-3">Which sorting method would you like for the Leaderboard?        
+        <p id="sorting" class="text-5xl text-center mb-0">Leaderboard by Rating</p>
+
+        <p class="mt-3 text-xl">Change to sort by?&nbsp   
             <button id="likes" onclick="refreshBooks('likes')"  
-            class="bg-gray-600 hover:bg-gray-700 text-white h-8 font-bold py-1 px-3 rounded-full">
+            class="bg-gray-600 hover:bg-gray-400 text-white h-8 font-bold py-1 px-3 rounded-full text-base">
                 Likes
             </button>
 
@@ -27,17 +22,18 @@
             </button>
         </p>
     </div>
-
+    
     <div id="book_cards" class="text-white mx-3"></div>
 
     <script>
+        // ajax get
         async function getBooks() {
             return fetch("{% url 'get_books' %}").then((res) => res.json());
         }
 
-        // async function getReadlists() {
-        //     return fetch("{...... url 'get_readlists' ....}").then((res) => res.json());
-        // }
+        async function getReadlists() {
+            return fetch("{% url 'get_readlists' %}").then((res) => res.json());
+        }
 
         // sort by stars. if the stars is equal => ascending by title
         function compareByRating(a, b) {
@@ -54,6 +50,21 @@
             }
             return a.fields.likes - b.fields.likes;
         }
+
+        function compareReadlistByLikes(a, b) {
+            if (a.fields.likes == b.fields.likes) {
+                return b.fields.name.localeCompare(a.fields.name);
+            }
+            return a.fields.likes - b.fields.likes;
+        }
+
+        async function showDetails(pk) {
+            window.open("book-id-" + pk + "/", "_blank");
+        }
+
+        async function showDetailsReadlist(pk) {
+            window.open("readlist-id-" + pk + "/", "_blank");
+        }
     
         // only show top 10 book and readlist
         async function refreshBooks(param) {
@@ -62,11 +73,40 @@
                 <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-5">`;
 
             if (param.match("readlist")) {
-                // const readlists = await getReadlists(); 
-                // readlists.sort(compareByLikes); // NNT GANTI JD LIKE READLISTNYA
-                // readlists.reverse();
                 document.getElementById("sorting").innerHTML = `\n<p class="text-center mt-0 text-5xl mb-0">Leaderboard by Readlist Likes</p>`;
-                // HANDLE READLIST
+                const readlists = await getReadlists(); 
+                readlists.sort(compareReadlistByLikes);
+                readlists.reverse();
+
+                // show top 10 readlists only
+                for (let i = 0; i < 10; i++) {
+                    if (i == readlists.length) {
+                        break;
+                    }
+                    readlist = readlists[i];
+                    htmlString += `\n
+                    <div class="rounded-xl shadow-lg bg-zinc-800 relative">
+                        <div class="p-5 flex flex-col max-w-sm overflow-hidden">
+                            <p class="text-xl md:text-xl font-medium text-white">
+                                ${i+1}. ${readlist.fields.name}
+                            </p>
+                            <p class="text-m md:text-m font-medium mt-2 text-white">
+                                Total Likes: ${readlist.fields.likes}
+                            </p>
+                            <p class="text-m md:text-m font-medium mt-2 text-white">
+                                Description: ${readlist.fields.description}
+                            </p>
+                            <br>
+                            <br>
+                            <button class="text-center bg-gray-600 text-white py-2 rounded-lg font-semibold mt-4 hover:bg-gray-400 
+                            focus:scale-95 transition-all duration-50 absolute inset-x-3 bottom-3" method="GET" onclick="showDetailsReadlist(${readlist.pk})">
+                                Details
+                            </button>
+                        </div>
+                    </div>`
+                }
+                htmlString += `\n</div></div>`;  
+                document.getElementById("book_cards").innerHTML = htmlString;       
             
             } else {
                 const books = await getBooks();
@@ -75,7 +115,7 @@
                     books.sort(compareByLikes);
                     books.reverse();
                 } else if (param.match("rating")) {
-                    document.getElementById("sorting").innerHTML = `\n<p class="text-center mt-0 text-5xl mb-0">Leaderboard by Rating (stars)</p>`;
+                    document.getElementById("sorting").innerHTML = `\n<p class="text-center mt-0 text-5xl mb-0">Leaderboard by Rating</p>`;
                     books.sort(compareByRating);
                     books.reverse();
                 }
@@ -95,16 +135,18 @@
                             <br>
                             <br>
                             <button class="text-center bg-gray-600 text-white py-2 rounded-lg font-semibold mt-4 hover:bg-gray-400 
-                            focus:scale-95 transition-all duration-50 absolute inset-x-3 bottom-3">
+                            focus:scale-95 transition-all duration-50 absolute inset-x-3 bottom-3" method="GET" onclick="showDetails(${book.pk})">
                                 Details
                             </button>
                         </div>
                     </div>`
                 }
-                htmlString += `\n</div></div>`;
+                htmlString += `\n</div></div>`;   
+                document.getElementById("book_cards").innerHTML = htmlString;      
             }
-            document.getElementById("book_cards").innerHTML = htmlString;
         }
+
         refreshBooks("rating"); // Default = by rating
+        
     </script>
 {% endblock content %}
