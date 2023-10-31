@@ -1,6 +1,8 @@
 {% extends 'base.html' %}
 
 {% block content %}
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
     <div class="text-white my-5 mx-3 text-center">
         
         <p id="sorting" class="text-5xl text-center mb-0">Leaderboard by Rating</p>
@@ -21,6 +23,30 @@
                 Readlist
             </button>
         </p>
+        <p>{{halo}}</p>
+        
+        <div>
+            <form method="POST" action="" class="mt-7 ml-16">
+                {% csrf_token %}
+                <p>
+                    <div>
+                        <p class="text-white text-start">
+                            {{form.search.label}}
+                        </p>      
+                        <div class="text-black mt-3 flex flex-col-3">
+                            <select name="select" class="w-44 overflow-hidden">
+                                {% for pk, title in form.search.help_text %}
+                                    <option class="text-black">{{title}}</option>
+                                {% endfor %}
+                            </select>
+                            <input type="submit" class="mx-3 button bg-gray-600 hover:bg-gray-400 text-white 
+                            h-8 font-bold py-1 px-3 rounded-full text-base" value="Submit">
+                            <p id="rank" class="text-white">"{{book}}" is currently ranked {{rank}}</p>
+                        </div>
+                    </div>
+                </p>
+            </form>
+        </div>
     </div>
     
     <div id="book_cards" class="text-white mx-3"></div>
@@ -146,7 +172,9 @@
             }
         }
 
-        refreshBooks("rating"); // Default = by rating
+        $(document).ready(function() {
+            refreshBooks("rating"); // Default = by rating
+        });
         
     </script>
 {% endblock content %}
