@@ -38,13 +38,13 @@ def get_books(request):
     data = Book.objects.all()
     return HttpResponse(serializers.serialize("json", data), content_type="application/json")
 
-@csrf_exempt
-def show_book_by_id(request, pk):
-    book = Book.objects.filter(pk=pk)[0]
-    context = {
-        'book':book,
-    }
-    return render(request, "details-book.html", context)
+# @csrf_exempt
+# def show_book_by_id(request, pk):
+#     book = Book.objects.filter(pk=pk)[0]
+#     context = {
+#         'book':book,
+#     }
+#     return render(request, "details-book.html", context)
 
 @csrf_exempt
 def get_readlists(request):
