@@ -1,6 +1,8 @@
 {% extends 'base.html' %}
 
 {% block content %}
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    
     <div class="text-white my-5 mx-3 text-center">
         <p id="sorting" class="text-5xl text-center mb-0">Books by Title</p>
 
@@ -41,7 +43,6 @@
             document.getElementById("book_cards").innerHTML = "";           
             let htmlString = `<div class="flex items-center justify-content-center container mx-auto my-8">
                 <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-5">`;
-
             const books = await getBooks();
             if (param.match("title")) {
                 document.getElementById("sorting").innerHTML = `\n<p class="text-center mt-0 text-5xl mb-0">Books by Title</p>`;
@@ -66,16 +67,19 @@
                         <br>
                         <br>
                         <button class="text-center bg-gray-600 text-white py-2 rounded-lg font-semibold mt-4 hover:bg-gray-400 
-                        focus:scale-95 transition-all duration-50 absolute inset-x-3 bottom-3">
+                        focus:scale-95 transition-all duration-50 absolute inset-x-3 bottom-3" method="GET" onclick="window.location.href='/book/${book.pk}/'">
                             Details
                         </button>
                     </div>
-                </div>`;
+                </div>`
             }
             htmlString += `\n</div></div>`;
             document.getElementById("book_cards").innerHTML = htmlString;
         }
-        
-        refreshBooks("title"); // Default = by title
+
+        $(document).ready(function() {
+            refreshBooks("title"); // Default = by title
+        });
+
     </script>
 {% endblock content %}

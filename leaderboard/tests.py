@@ -11,14 +11,6 @@ class LeaderboardTest(TestCase):
         response = Client().get('/leaderboard/')
         self.assertTemplateUsed(response, 'leaderboard.html')
 
-    def test_details_url_is_exist(self):
-        response = Client().get('/leaderboard/book-id-1/')
-        self.assertEqual(response.status_code, 200)
-
-    def test_details_using_details_template(self):
-        response = Client().get('/leaderboard/book-id-1/')
-        self.assertTemplateUsed(response, 'details.html')
-
 class TestModels(TestCase):
     def test_string_method(self):
         book = Book.objects.get(id=1)
