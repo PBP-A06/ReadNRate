@@ -25,7 +25,8 @@ urlpatterns = [
     path('home/', include('home.urls')),
     path('leaderboard/', include('leaderboard.urls')),
     path('books/', include('book.urls')),
-    path('bookreview/<int:id>/', include('bookReview.urls'))
+    path('bookreview/<int:id>/', include('bookReview.urls')),
+    path('readlist/', include('readlist.urls')),
 
 ]
 
