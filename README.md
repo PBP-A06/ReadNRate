@@ -1,5 +1,7 @@
 # ReadNRate 
 
+### Deployed at https://readnrate.adaptable.app/
+
 ### Anggota Kelompok A06:
 - 2206083445 - Soros Febriano <br>
 - 2206824073 - Muhammad Fatih Zain <br>
@@ -26,8 +28,9 @@ Kami menyediakan dan menganalisis lebih dari 100 buku untuk anda nilai dan juga 
 1. **Leaderboard**
     - Dibagi menjadi 3 jenis leaderboard:
         1. Books Leaderboard by Rating: buku dengan rating tertinggi
-        2. Books Leaderboard by Likes: buku paling populer
-        3. Readlist Leaderboard: readlist terbaik
+        2. Books Leaderboard by Likes: buku paling populer (likes terbanyak)
+        3. Readlist Leaderboard: readlist terbaik (likes terbanyak)
+    - Dapat mencari peringkat suatu buku berdasarkan rating
 3. **Readlist**
     - Pengguna dapat menambahkan daftar bacaan sendiri, seperti fitur “playlist” pada music player.
     - Merupakan halaman yang menampilkan 5 readlist yang telah dibuat oleh seluruh user yang terdaftar.
@@ -43,6 +46,12 @@ Kami menyediakan dan menganalisis lebih dari 100 buku untuk anda nilai dan juga 
     - Menambahkan buku yang dipilih ke daftar buku yang telah dibaca user dan meminta rating user mengenai buku tersebut.
     - User dapat memberikan comment untuk menyampaikan review terhadap buku.
     - Pengguna dapat memberikan rating buku dengan skala 5.
+6. **Home Page**
+    - Menampilkan 5 buku secara acak
+    - Menampilkan _navigation bar_ yang mengarah ke list seluruh buku, readlist, leaderboard, dan sign in atau sign up.
+7. **Register dan Sign In**
+    - Autentikasi dan otorisasi pengguna
+8. 
 <hr>
 
 ## 4. Roles 
