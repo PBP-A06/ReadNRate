@@ -10,3 +10,4 @@ class Readlist(models.Model):
     description = models.TextField(default="")
     books = models.ManyToManyField(Book)
     likes = models.IntegerField(default=0)
+    liked_by = models.ManyToManyField(User, related_name='liked_readlists', blank=True)

@@ -3,10 +3,10 @@
 {% block content %}
 <div class="text-white mx-3">
 <head>
-    <title>Top 5 Readlists</title>
+    <title>Readlists</title>
 </head>
 <body>
-    <h1 class="text-3xl font-bold mb-4">Top 5 Readlists</h1>
+    <h1 class="text-3xl font-bold mb-4">Readlists</h1>
     <div class="grid grid-cols-5 gap-4">
         {% for readlist in top_5_readlists %}
             <div class="rounded-xl shadow-lg bg-zinc-800 relative">
@@ -17,10 +17,21 @@
                     <h2 class="text-lg font-bold">{{ readlist.name }}</h2>
                     <h5>Made by: {{ readlist.user.username }}</h5>
                     <ul>
-                        {{readlist.description}}
+                        Description: {{readlist.description}}
                     </ul>
-                    <ul>likes: {{readlist.likes}}</ul>
-                    <ul><button id="likeBtn">like</button></ul>
+                    <ul id="like-count-{{ readlist.pk }}">Likes: {{readlist.likes}}</ul>
+                    <ul><button class="like-button bg-gray-600 hover:bg-gray-400 text-white h-9 px-4 py-1 rounded-full ml-2 mb-4"
+                        data-readlist-id="{{ readlist.pk }}">
+                    <span class="flex items-center space-x-2">
+                        <svg id="like-icon" fill="{% if has_liked %}red{% else %}none{% endif %}" stroke="currentColor" stroke-width="1.5"
+                             viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="w-5 h-5">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                  d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"></path>
+                        </svg>
+                        Like
+                    </span>
+                </button>
+            </ul>
                     <br>
                     <ul>
                         <a href="{% url 'show_readlist_by_id' pk=readlist.pk %}" class="btn text-center bg-gray-600 
@@ -33,10 +44,42 @@
             </div>
         {% endfor %}
     </div>
-
-    <a href="{% url 'readlist:create_readlist' %}" class="btn-primary">Create your own read list</a>
+    <br>
+    
+    <a href="{% url 'readlist:create_readlist' %}" class="btn text-center bg-gray-600 
+    text-white py-2 px-3 rounded-lg font-semibold mt-4 hover:bg-gray-400 focus:scale-95 transition-all duration-50">Create your own read list</a>
 </body>
 </div>
 
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+    document.querySelectorAll(".like-button").forEach(function (button) {
+        button.addEventListener("click", function () {
+            var readlistId = button.getAttribute("data-readlist-id");
+
+            fetch(`toggle_like_readlist/${readlistId}/`, {
+                method: "POST",
+                credentials: "same-origin", // Allow cookies to be sent
+            })
+                .then((response) => response.json())
+                .then((data) => {
+                    if (data.status === "success") {
+                        // Update the like count on the page
+                        var likeCountElement = document.getElementById("like-count-" + readlistId);
+                        likeCountElement.textContent = "Likes: " + data.total_likes;
+
+                        // Toggle the fill color of the like icon
+                        var likeIcon = button.querySelector("#like-icon");
+                        if (data.has_liked) {
+                            likeIcon.setAttribute("fill", "red");
+                        } else {
+                            likeIcon.setAttribute("fill", "none");
+                        }
+                    }
+                });
+        });
+    });
+});
+</script>
 
 {% endblock content %}

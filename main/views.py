@@ -16,9 +16,8 @@ from django.views.decorators.csrf import csrf_exempt
 def show_main(request):
     books = Book.objects.all()
     context = {
-        'books':books,
+        'test':'testing'
     }
-
     return render(request, "main.html", context)
 
 def login_user(request):

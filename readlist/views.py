@@ -12,7 +12,7 @@ from django.views.decorators.csrf import csrf_exempt
 
 #show all existing readlists
 def show_readlist(request):
-    top_5_readlists = Readlist.objects.all()[0:5]
+    top_5_readlists = Readlist.objects.all()
 
     context = {
         'top_5_readlists': top_5_readlists,
@@ -76,3 +76,22 @@ def show_readlist_by_id(request, pk):
         'books':books,
     }
     return render(request, "details-readlist.html", context)
+
+@csrf_exempt
+@login_required(login_url='/login')
+def toggle_like_readlist(request, id):
+    if request.method == 'POST':
+        readlist = get_object_or_404(Readlist, pk=id)
+        if request.user in readlist.liked_by.all():
+            readlist.liked_by.remove(request.user)
+            readlist.likes -= 1
+        else:
+            readlist.liked_by.add(request.user)
+            readlist.likes += 1
+
+        readlist.save()  # Tambahkan baris ini untuk menyimpan perubahan
+
+        total_likes = readlist.liked_by.count()  # Menghitung jumlah like yang diperbarui
+        has_liked = request.user in readlist.liked_by.all() if request.user.is_authenticated else False
+
+        return JsonResponse({'status': 'success', 'total_likes': total_likes, 'has_liked': has_liked})
