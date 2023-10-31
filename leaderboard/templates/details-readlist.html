@@ -18,10 +18,8 @@
 </div>
 
 <p class="text-white text-xl text-center">
-    Books in this Readlist:
+    Book(s) in this Readlist:
 </p>
-
-<!-- <div id="book_cards"></div> -->
 
 <div class="flex items-center justify-content-center container mx-auto my-8">
     <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-5">
@@ -38,7 +36,7 @@
                     <br>
                     <br>
                     <button class="text-center bg-gray-600 text-white py-2 rounded-lg font-semibold mt-4 hover:bg-gray-400 
-                    focus:scale-95 transition-all duration-50 absolute inset-x-3 bottom-3" method="GET">
+                    focus:scale-95 transition-all duration-50 absolute inset-x-3 bottom-3" method="GET" onclick="window.location.href='/book/{{book.pk}}/'">
                         Details
                     </button>
                 </div>
