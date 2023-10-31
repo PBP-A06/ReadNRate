@@ -3,7 +3,6 @@ from django.core import serializers
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from book.models import Book
-from leaderboard.views import *
 
 @csrf_exempt
 def get_books(request):
@@ -16,4 +15,4 @@ def show_books(request):
     context = {
         'books':books,
     }
-    return render(request, "books.html", context)
+    return render(request, "book.html", context)

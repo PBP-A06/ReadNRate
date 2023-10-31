@@ -33,12 +33,12 @@
             <div class="text-center mt-4">
                 <button id="bookmark-button" data-book="{{ book.id }}" class="bg-gray-600 hover:bg-gray-400 text-white h-9 px-4 py-1 rounded-full mt-4">
                     <span class="flex items-center justify-center space-x-2">
-                        <svg id="bookmark-icon" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="w-5 h-5">
+                        <svg id="bookmark-icon" fill="{% if request.user in book.bookmarked_by.all %}yellow{% else %}none{% endif %}" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="w-5 h-5">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 011.186 0z"></path>
                         </svg>
                         Bookmark
                     </span>
-                </button>
+                </button>                
                 
                 <button id="like-button-combined" data-id="{{ book.id }}" class="bg-gray-600 hover:bg-gray-400 text-white h-9 px-4 py-1 rounded-full ml-2 mt-4 {% if has_liked %}liked{% else %}unliked{% endif %}">
                     <span class="flex items-center space-x-2">
