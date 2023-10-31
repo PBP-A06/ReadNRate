@@ -25,6 +25,8 @@ urlpatterns = [
     path('home/', include('home.urls')),
     path('leaderboard/', include('leaderboard.urls')),
     path('books/', include('book.urls')),
+    path('bookreview/<int:id>/', include('bookReview.urls'))
+
 ]
 
 # Serve media files during development
