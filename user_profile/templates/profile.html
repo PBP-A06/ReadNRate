@@ -20,7 +20,7 @@
                 <!-- Bookmark data will be inserted here using AJAX -->
             </div>
         </div>
-        <hr class="" width="100%">
+        <hr class="" width="90%">
         <div class="book-list">
             <h2 class="text-xl font-semibold text-white">
                 <ion-icon name="heart-outline" class="text-white"></ion-icon>
@@ -30,10 +30,11 @@
                 <!-- Liked data will be inserted here using AJAX -->
             </div>
         </div>
-        <hr class="" width="100%">
+        <hr class="" width="90%">
     </div>
 
     <script>
+
         $(document).ready(function() {
             $.ajax({
                 url: '{% url "user_profile:show_profile" %}',  // Use the URL pattern name to access the view
