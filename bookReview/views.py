@@ -82,6 +82,7 @@ def toggle_like(request, id):
         else:
             book.liked_by.add(request.user)
 
+        book.likes = book.liked_by.count()
         book.save()  # Tambahkan baris ini untuk menyimpan perubahan
 
         total_likes = book.liked_by.count()  # Menghitung jumlah like yang diperbarui
