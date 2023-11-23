@@ -10,23 +10,30 @@
     <div id="bookmarked-books"></div>
     <div id="liked-books"></div> -->
 
-    <div class="container">
+    <div class="container mx-14 my-6">
         <div class="book-list">
-            <h2 class="text-xl font-semibold text-white">Bookmarks</h2>
+            <h2 class="text-xl font-semibold text-white">
+                <ion-icon name="bookmark-outline" class="text-white"></ion-icon>
+                Bookmarks
+            </h2>
             <div id="bookmarked-books">
                 <!-- Bookmark data will be inserted here using AJAX -->
             </div>
         </div>
+        <hr class="" width="100%">
         <div class="book-list">
-            <h2 class="text-xl font-semibold text-white">Likes</h2>
+            <h2 class="text-xl font-semibold text-white">
+                <ion-icon name="heart-outline" class="text-white"></ion-icon>
+                Likes
+            </h2>
             <div id="liked-books">
                 <!-- Liked data will be inserted here using AJAX -->
             </div>
         </div>
+        <hr class="" width="100%">
     </div>
 
     <script>
-
         $(document).ready(function() {
             $.ajax({
                 url: '{% url "user_profile:show_profile" %}',  // Use the URL pattern name to access the view
