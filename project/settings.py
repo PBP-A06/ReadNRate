@@ -156,4 +156,4 @@ MESSAGE_TAGS = {
     messages.ERROR: 'alert-danger',
 }
 
-CSRF_TRUSTED_ORIGINS = "https://readnrate.adaptable.app/"
+CSRF_TRUSTED_ORIGINS = ['https://readnrate.adaptable.app','https://*.127.0.0.1', 'http://localhost:8000']
