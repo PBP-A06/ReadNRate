@@ -11,7 +11,6 @@ from book.models import Book
 from django.core import serializers
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
-from user_profile.models import User
 
 @csrf_exempt
 def show_main(request):
@@ -48,14 +47,12 @@ def register(request):
     if request.method == "POST":
         form = UserCreationForm(request.POST)
         if form.is_valid():
-            user = form.save()
-            # Create a corresponding UserProfileUser instance
-            User.objects.create(
-                username=user.username,
-                # profile_name=user.username,  # You can adjust this field as needed
-                # name=user.username  # You can adjust this field as needed
-            )
+            form.save()
             messages.success(request, 'Your account has been successfully created!')
             return redirect('main:login')
+        else:
+            for field, errors in form.errors.items():
+                for error in errors:
+                    messages.error(request, f'{error}')
     context = {'form':form}
     return render(request, 'register.html', context)

@@ -6,8 +6,6 @@ from django.views.decorators.csrf import csrf_exempt
 from user_profile.models import *
 from django.contrib.auth.decorators import login_required
 
-# Create your views here.
-
 @csrf_exempt
 def get_books(request):
     data = Book.objects.all()
@@ -15,7 +13,7 @@ def get_books(request):
 
 @csrf_exempt
 def show_bookmarked(request):
-    books = Book.objects.filter(bookmarked=True)
+    books = Book.objects.filter(bookmarkedbook=True)
     context = {
         'books':books,
     }
@@ -39,5 +37,6 @@ def show_profile(request):
         'bookmarked_books': bookmarked_books,
         'liked_books': liked_books,
     }
+    return render(request, "profile.html", context)
 
-    return JsonResponse(context)  # Return the context as JSON
+    # return JsonResponse(context)  # Return the context as JSON

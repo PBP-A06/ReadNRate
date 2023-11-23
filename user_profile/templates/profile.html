@@ -29,7 +29,7 @@
 
         $(document).ready(function() {
             $.ajax({
-                url: '{% url "show_profile" %}',  // Use the URL pattern name to access the view
+                url: '{% url "user_profile:show_profile" %}',  // Use the URL pattern name to access the view
                 type: 'GET',
                 success: function(data) {
                     // Process the data and update the UI for both bookmarked and liked books

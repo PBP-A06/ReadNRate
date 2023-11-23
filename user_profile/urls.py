@@ -1,6 +1,8 @@
 from django.urls import path
 from user_profile.views import *
 
+app_name = 'user_profile'
+
 urlpatterns = [
     # path('', ),
     path("show-bookmarked/", show_bookmarked, name="show_bookmarked"),

@@ -33,21 +33,16 @@
                             </tr>
                             
                             <tr>
-                                <td class="flex justify-center"><input class="mt-[10px] bg-[#3CB81D] text-white px-4 py-2 rounded-full hover:bg-lime-900 font-['Chivo']" type="submit" value="Log In"></td>
+                                <td class="flex justify-center"><input class="mt-[35px] bg-[#3CB81D] text-white px-4 py-2 rounded-full hover:bg-lime-900 font-['Chivo']"
+                                    type="submit" value="Log In"></td>
                             </tr>
                         </table>
                     </div>
                 </form>
 
-                {% if messages %}
-                    <ul>
-                        {% for message in messages %}
-                            <li>{{ message }}</li>
-                        {% endfor %}
-                    </ul>
-                {% endif %}     
                 <br>
-                <p class="block mb-2 text-sm font-thin text-[10px] font-['Inter'] text-white dark:text-white mt-[40px] ml-[15px]">Don't have an account yet?</p>
+
+                <p class="block mb-2 text-sm font-thin text-[10px] font-['Inter'] text-white dark:text-white mt-[10px] ml-[15px]">Don't have an account yet?</p>
                 <a href="{% url 'main:register' %}" class="block mb-2 text-sm font-thin text-[10px] font-['Inter'] text-white dark:text-white ml-[15px]"><u>Register Now</u></a>
             </div>
         </div>

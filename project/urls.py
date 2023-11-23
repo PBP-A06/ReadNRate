@@ -28,6 +28,7 @@ urlpatterns = [
     path('books/', include('book.urls')),
     path('', include('bookReview.urls')),
     path('readlist/', include('readlist.urls')),
+    path('profile/', include('user_profile.urls')),
 ]
 
 # Serve media files during development

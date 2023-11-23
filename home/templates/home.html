@@ -32,10 +32,57 @@
     </div>
     
     <div class="items-center justify-center w-full">
-        <hr class="w-[1200px] h-1 my-8 bg-gray-200 border-0 rounded dark:bg-gray-700 ml-[100px]">
+        <hr class="w-[1200px] h-1 my-8 bg-gray-200 border-0 rounded dark:bg-gray-700 mx-[100px]">
 
         {% if user.is_authenticated %}
-        <div class="text-right text-white text-[17px] font-['Chivo'] mt-30 mr-[250px]">YOUR RECENT REVIEWS</div>
+        <div class="text-right text-white text-[24px] font-['Chivo'] mt-30 mr-[180px]">READ THESE!</div>
+
+        <div id="book_cards" class="text-white mx-3"></div>
+
+        <script>
+            async function getBooks() {
+                return fetch("{% url 'book:get_books' %}").then((res) => res.json());
+            }
+        
+            async function refreshBooks(param) {
+                document.getElementById("book_cards").innerHTML = "";           
+                let htmlString = `<div class="flex items-center justify-content-center container mx-auto my-8">
+                    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-5">`;
+    
+                const books = await getBooks();
+
+                // show all books
+                for (let i = 0; i < 5; i++) {
+                    // Generate a random number between 1 and 100 (inclusive).
+                    const j = Math.floor(Math.random() * 100) + 1;
+
+                    book = books[j];
+
+                    htmlString += `\n
+                    <div class="drop-shadow-xl relative">
+                        <div class="p-5 flex flex-col">
+
+                            <a href="/book/${book.pk}/">
+                                <img src="${book.fields.image_link}" alt="Cover for ${book.fields.title}" 
+                                class="rounded-xl overflow-hidden w-52">
+                            </a>
+
+                            <p class="text-m md:text-m font-['Chivo'] mt-3 text-white">
+                                ${book.fields.title}
+                            </p>
+                            <p class="font-light font-['Almarai'] text-s mt-3 text-white">
+                                ${book.fields.category}
+                            </p>
+                            <br>
+                            <br>
+                        </div>
+                    </div>`
+                }
+                htmlString += `\n</div></div>`;
+                document.getElementById("book_cards").innerHTML = htmlString;
+            }
+            refreshBooks("title"); // Default = by title
+        </script>
 
         {% else %}
         <div id="book_cards" class="text-white mx-3"></div>
@@ -62,8 +109,12 @@
                     htmlString += `\n
                     <div class="drop-shadow-xl relative">
                         <div class="p-5 flex flex-col">
-                            <img src="${book.fields.image_link}" alt="Cover for ${book.fields.title}" 
-                            class="rounded-xl overflow-hidden w-52">
+
+                            <a href="{% url 'main:login' %}">
+                                <img src="${book.fields.image_link}" alt="Cover for ${book.fields.title}" 
+                                class="rounded-xl overflow-hidden w-52">
+                            </a>
+                            
                             <p class="text-m md:text-m font-['Chivo'] mt-3 text-white">
                                 ${book.fields.title}
                             </p>
@@ -73,6 +124,7 @@
                             <br>
                             <br>
                         </div>
+
                     </div>`
                 }
                 htmlString += `\n</div></div>`;
