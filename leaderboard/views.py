@@ -38,14 +38,6 @@ def get_books(request):
     data = Book.objects.all()
     return HttpResponse(serializers.serialize("json", data), content_type="application/json") 
 
-# @csrf_exempt
-# def show_book_by_id(request, pk):
-#     book = Book.objects.filter(pk=pk)[0]
-#     context = {
-#         'book':book,
-#     }
-#     return render(request, "details-book.html", context)
-
 @csrf_exempt
 def get_readlists(request):
     readlists = Readlist.objects.all()
@@ -66,3 +58,33 @@ def create_leaderboard_entries(request):
     books = Book.objects.all().order_by('-stars', 'title')
     leaderboard_entries = [RatingLeaderboardEntry(book=book) for book in books]
     RatingLeaderboardEntry.objects.bulk_create(leaderboard_entries)
+
+@csrf_exempt
+def get_100_best_rated_books(request):
+    data = Book.objects.all().order_by('-stars', 'title')
+    return HttpResponse(serializers.serialize("json", data), content_type="application/json")
+
+@csrf_exempt
+def get_10_best_rated_books(request):
+    data = Book.objects.all().order_by('-stars', 'title')[:10]
+    return HttpResponse(serializers.serialize("json", data), content_type="application/json")
+
+@csrf_exempt
+def get_100_most_liked_books(request):
+    data = Book.objects.all().order_by('-likes', 'title')
+    return HttpResponse(serializers.serialize("json", data), content_type="application/json")
+
+@csrf_exempt
+def get_10_most_liked_books(request):
+    data = Book.objects.all().order_by('-likes', 'title')[:10]
+    return HttpResponse(serializers.serialize("json", data), content_type="application/json")
+
+@csrf_exempt
+def get_100_books_sorted_by_title(request):
+    data = Book.objects.all().order_by('title')
+    return HttpResponse(serializers.serialize("json", data), content_type="application/json")
+
+@csrf_exempt
+def get_100_books_sorted_by_category(request):
+    data = Book.objects.all().order_by('category', 'title')
+    return HttpResponse(serializers.serialize("json", data), content_type="application/json")
