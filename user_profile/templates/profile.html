@@ -1,82 +1,109 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <div class="text-white my-5 mx-3 text-center">
-        <p id="sorting" class="text-5xl text-center mb-0">Bookmarks and Likes</p>
+        <p id="sorting" class="text-5xl text-center mb-0">Reviews, Bookmarks and Likes</p>
     </div>
-    
-    <!-- <div id="book_cards" class="text-white mx-3"></div>
-    <div id="bookmarked-books"></div>
-    <div id="liked-books"></div> -->
 
     <div class="container mx-14 my-6">
+        <div class="book-list">
+            <h2 class="text-xl font-semibold text-white">
+                <ion-icon name="timer-outline" class="text-white"></ion-icon>
+                History
+            </h2>
+            <div class="book-items">
+                <div class="flex items-center justify-content-center container mx-auto my-8">
+                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-5">
+                {% for book in books_read %}
+                    <div class="rounded-xl shadow-lg bg-zinc-800 relative">
+                        <div class="p-5 flex flex-col">
+                            <img src="{{ book.image_link }}" alt="Cover for {{ book.title }}" 
+                                class="rounded-xl overflow-hidden w-52">
+                            <p class="text-m md:text-m font-medium mt-3 text-white">
+                                {{ forloop.counter }}. {{ book.title }}
+                                <br>
+                                -- {{ book.category }}
+                            </p>
+                            <br>
+                            <br>
+                            <button class="text-center bg-gray-600 text-white py-2 rounded-lg font-semibold mt-4 hover-bg-gray-400 
+                                focus:scale-95 transition-all duration-50 absolute inset-x-3 bottom-3" 
+                                onclick="window.location.href='/book/{{ book.pk }}/'">
+                                Details
+                            </button>
+                        </div>
+                    </div>
+                {% empty %}
+                    <p class="text-white">No books have been reviewed.</p>
+                {% endfor %}
+            </div>
+        </div>
+        <hr class="" width="100%">
         <div class="book-list">
             <h2 class="text-xl font-semibold text-white">
                 <ion-icon name="bookmark-outline" class="text-white"></ion-icon>
                 Bookmarks
             </h2>
-            <div id="bookmarked-books">
-                <!-- Bookmark data will be inserted here using AJAX -->
+            <div class="book-items">
+                <div class="flex items-center justify-content-center container mx-auto my-8">
+                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-5">
+                {% for book in bookmarked_books %}
+                    <div class="rounded-xl shadow-lg bg-zinc-800 relative">
+                        <div class="p-5 flex flex-col">
+                            <img src="{{ book.image_link }}" alt="Cover for {{ book.title }}" 
+                                class="rounded-xl overflow-hidden w-52">
+                            <p class="text-m md:text-m font-medium mt-3 text-white">
+                                {{ forloop.counter }}. {{ book.title }}
+                                <br>
+                                -- {{ book.category }}
+                            </p>
+                            <br>
+                            <br>
+                            <button class="text-center bg-gray-600 text-white py-2 rounded-lg font-semibold mt-4 hover-bg-gray-400 
+                                focus:scale-95 transition-all duration-50 absolute inset-x-3 bottom-3" 
+                                onclick="window.location.href='/book/{{ book.pk }}/'">
+                                Details
+                            </button>
+                        </div>
+                    </div>
+                {% empty %}
+                    <p class="text-white">No books have been bookmarked.</p>
+                {% endfor %}
             </div>
         </div>
-        <hr class="" width="90%">
+        <hr class="" width="100%">
         <div class="book-list">
             <h2 class="text-xl font-semibold text-white">
                 <ion-icon name="heart-outline" class="text-white"></ion-icon>
                 Likes
             </h2>
-            <div id="liked-books">
-                <!-- Liked data will be inserted here using AJAX -->
+            <div class="book-items">
+                <div class="flex items-center justify-content-center container mx-auto my-8">
+                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-5">
+                {% for book in liked_books %}
+                    <div class="rounded-xl shadow-lg bg-zinc-800 relative">
+                        <div class="p-5 flex flex-col">
+                            <img src="{{ book.image_link }}" alt="Cover for {{ book.title }}" 
+                                class="rounded-xl overflow-hidden w-52">
+                            <p class="text-m md:text-m font-medium mt-3 text-white">
+                                {{ forloop.counter }}. {{ book.title }}
+                                <br>
+                                -- {{ book.category }}
+                            </p>
+                            <br>
+                            <br>
+                            <button class="text-center bg-gray-600 text-white py-2 rounded-lg font-semibold mt-4 hover-bg-gray-400 
+                                focus:scale-95 transition-all duration-50 absolute inset-x-3 bottom-3" 
+                                onclick="window.location.href='/book/{{ book.pk }}/'">
+                                Details
+                            </button>
+                        </div>
+                    </div>
+                {% empty %}
+                    <p class="text-white">No books have been liked.</p>
+                {% endfor %}
             </div>
         </div>
-        <hr class="" width="90%">
+        <hr class="" width="100%">
     </div>
-
-    <script>
-
-        $(document).ready(function() {
-            $.ajax({
-                url: '{% url "user_profile:show_profile" %}',  // Use the URL pattern name to access the view
-                type: 'GET',
-                success: function(data) {
-                    // Process the data and update the UI for both bookmarked and liked books
-                    displayBooks('bookmarked-books', data.bookmarked_books);
-                    displayBooks('liked-books', data.liked_books);
-                }
-            });
-
-            function displayBooks(containerId, books) {
-                var container = $('#' + containerId);
-                container.empty();  // Clear the container
-
-                // Loop through the data and create elements to display the books
-                for (var i = 0; i < books.length; i++) {
-                    var book = books[i];
-                    var bookElement = `
-                        <div class="rounded-xl shadow-lg bg-zinc-800 relative">
-                            <div class="p-5 flex flex-col">
-                                <img src="${book.fields.image_link}" alt="Cover for ${book.fields.title}" 
-                                class="rounded-xl overflow-hidden w-52">
-                                <p class="text-m md:text-m font-medium mt-3 text-white">
-                                    ${i + 1}. ${book.fields.title}
-                                    <br>
-                                    -- ${book.fields.category}
-                                </p>
-                                <br>
-                                <br>
-                                <button class="text-center bg-gray-600 text-white py-2 rounded-lg font-semibold mt-4 hover-bg-gray-400 
-                                focus:scale-95 transition-all duration-50 absolute inset-x-3 bottom-3" method="GET" onclick="showDetails(${book.pk})">
-                                    Details
-                                </button>
-                            </div>
-                        </div>`;
-
-                    container.append(bookElement);
-                }
-            }
-        });
-
-    </script>
-
 {% endblock content %}
