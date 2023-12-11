@@ -62,9 +62,9 @@ def register(request):
             }, status=401)   
     
     data = json.loads(request.body)
-    username = data.get('username', '')
-    password = data.get('password', '')
-    password_confirmation = data.get('passwordConfirmation', '')
+    username = data['username']
+    password = data['password']
+    password_confirmation = data['passwordConfirmation']
 
     if username == "" or password == "":
             return JsonResponse({
