@@ -60,6 +60,11 @@ def register(request):
             "status": "failed",
             "message": "Register gagal. Bukan method POST"
             }, status=401)   
+    
+    data = json.loads(request.body)
+    username = data.get('username', '')
+    password = data.get('password', '')
+    password_confirmation = data.get('passwordConfirmation', '')
 
     if username == "" or password == "":
             return JsonResponse({
@@ -72,18 +77,13 @@ def register(request):
             "status": "failed",
             "message": "Register gagal. Password tidak match."
             }, status=401)   
-
-    data = json.loads(request.body)
-    username = data['username']
-    password = data['password']
-    password_confirmation = data['passwordConfirmation']
     
     try: 
         user = User.objects.create(
             username = username,
             password = make_password(password),
         )
-        user.save
+        user.save()
 
         return JsonResponse({
             'status': 'success',
