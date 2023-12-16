@@ -1,3 +1,4 @@
+import json
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Review
 from book.models import Book
@@ -32,19 +33,31 @@ def show_book_detail(request, id):
 @csrf_exempt
 def add_review_ajax(request, id):
     if request.method == 'POST':
-        review_text = request.POST.get("review_text")
+        try:
+            data = json.loads(request.body)
+            review_text = data.get("review_text")
 
-        review = Review.objects.create(
-            user=request.user,
-            book=Book.objects.get(id=id),
-            review_text=review_text,
-        )
+            review = Review.objects.create(
+                user=request.user,
+                book=Book.objects.get(id=id),
+                review_text=review_text,
+            )
 
-        return JsonResponse({'success': True, 'review_text': review_text, 'username': request.user.username})
-    
-    return JsonResponse({'success': False, 'error': 'Invalid request method'})
+            return JsonResponse({'success': True, 'review_text': review_text, 'username': request.user.username})
+        except Exception as e:
+            return JsonResponse({'success': False, 'error': str(e)})
+    else:
+        return JsonResponse({'success': False, 'error': 'Invalid request method'})
 
 
+def get_reviews(request, book_id):
+    try:
+        book = Book.objects.get(pk=book_id)
+        reviews = Review.objects.filter(book=book).values('user__username', 'review_text')
+        reviews_list = list(reviews)  # Convert QuerySet to a list of dicts
+        return JsonResponse(reviews_list, safe=False)  # 'safe=False' is needed to serialize a list
+    except Book.DoesNotExist:
+        return JsonResponse({'error': 'Book not found'}, status=404)
 
 @login_required
 @csrf_exempt
@@ -82,8 +95,7 @@ def toggle_like(request, id):
         else:
             book.liked_by.add(request.user)
 
-        book.likes = book.liked_by.count()
-        book.save()  # Tambahkan baris ini untuk menyimpan perubahan
-
-        total_likes = book.liked_by.count()  # Menghitung jumlah like yang diperbarui
+        total_likes = book.liked_by.count()
         return JsonResponse({'status': 'success', 'total_likes': total_likes})
+
+    return JsonResponse({'status': 'error'})
