@@ -99,3 +99,16 @@ def toggle_like(request, id):
         return JsonResponse({'status': 'success', 'total_likes': total_likes})
 
     return JsonResponse({'status': 'error'})
+
+@login_required
+def get_like_status(request, id):
+    book = get_object_or_404(Book, pk=id)
+    is_liked = request.user in book.liked_by.all()
+    like_count = book.liked_by.count()
+    return JsonResponse({'is_liked': is_liked, 'like_count': like_count})
+
+@login_required
+def get_bookmark_status(request, id):
+    book = get_object_or_404(Book, pk=id)
+    is_bookmarked = request.user in book.bookmarked_by.all()
+    return JsonResponse({'is_bookmarked': is_bookmarked})
