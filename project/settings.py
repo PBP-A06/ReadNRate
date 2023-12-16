@@ -30,7 +30,7 @@ PRODUCTION = env.bool('PRODUCTION', False)
 SECRET_KEY = 'django-insecure-bay)gt50tfycq3=0&!mo1-8wbgsc#h4d8#p^n8jgea(lwa5k^='
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ["*"]
 
