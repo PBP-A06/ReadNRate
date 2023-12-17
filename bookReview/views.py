@@ -49,21 +49,6 @@ def add_review_ajax(request, id):
     else:
         return JsonResponse({'success': False, 'error': 'Invalid request method'})
 
-
-def get_reviews(request, book_id):
-    try:
-        book = Book.objects.get(pk=book_id)
-        reviews = Review.objects.filter(book=book)
-        reviews_list = [
-            {
-                'username': review.user.username,
-                'review_text': review.review_text
-            } for review in reviews
-        ]
-        return JsonResponse(reviews_list, safe=False)
-    except Book.DoesNotExist:
-        return JsonResponse({'error': 'Book not found'}, status=404)
-
 @login_required
 @csrf_exempt
 def submit_review(request):
@@ -105,6 +90,20 @@ def toggle_like(request, id):
 
     return JsonResponse({'status': 'error'})
 
+def get_reviews(request, book_id):
+    try:
+        book = Book.objects.get(pk=book_id)
+        reviews = Review.objects.filter(book=book)
+        reviews_list = [
+            {
+                'username': review.user.username,
+                'review_text': review.review_text
+            } for review in reviews
+        ]
+        return JsonResponse(reviews_list, safe=False)
+    except Book.DoesNotExist:
+        return JsonResponse({'error': 'Book not found'}, status=404)
+
 @login_required
 def get_like_status(request, id):
     book = get_object_or_404(Book, pk=id)
@@ -117,3 +116,8 @@ def get_bookmark_status(request, id):
     book = get_object_or_404(Book, pk=id)
     is_bookmarked = request.user in book.bookmarked_by.all()
     return JsonResponse({'is_bookmarked': is_bookmarked})
+
+def get_like_count(request, id):
+    book = get_object_or_404(Book, pk=id)
+    like_count = book.liked_by.count()
+    return JsonResponse({'like_count': like_count})
