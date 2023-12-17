@@ -53,9 +53,14 @@ def add_review_ajax(request, id):
 def get_reviews(request, book_id):
     try:
         book = Book.objects.get(pk=book_id)
-        reviews = Review.objects.filter(book=book).values('user__username', 'review_text')
-        reviews_list = list(reviews)  # Convert QuerySet to a list of dicts
-        return JsonResponse(reviews_list, safe=False)  # 'safe=False' is needed to serialize a list
+        reviews = Review.objects.filter(book=book)
+        reviews_list = [
+            {
+                'username': review.user.username,
+                'review_text': review.review_text
+            } for review in reviews
+        ]
+        return JsonResponse(reviews_list, safe=False)
     except Book.DoesNotExist:
         return JsonResponse({'error': 'Book not found'}, status=404)
 
