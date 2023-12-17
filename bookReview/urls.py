@@ -10,4 +10,7 @@ urlpatterns = [
     path('toggle_bookmark/<int:id>/', toggle_bookmark, name='toggle_bookmark'),
     path('toggle_like/<int:id>/', toggle_like, name='toggle_like'),
     path('get_reviews/<int:book_id>/', get_reviews, name='get_reviews'),
+    path('get_like_status/<int:id>/', get_like_status, name='get_like_status'),
+    path('get_bookmark_status/<int:id>/', get_bookmark_status, name='get_bookmark_status'),
+    path('get_like_count/<int:id>/', get_like_count, name='get_like_count'),
 ]
