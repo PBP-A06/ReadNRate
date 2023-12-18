@@ -108,6 +108,7 @@ def get_reviews_all(request):
     reviews = Review.objects.all()
     reviews_list = [
         {
+            'book' : review.book,
             'username': review.user.username,
             'review_text': review.review_text
         } for review in reviews
