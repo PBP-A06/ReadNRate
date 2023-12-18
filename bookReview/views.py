@@ -103,6 +103,16 @@ def get_reviews(request, book_id):
         return JsonResponse(reviews_list, safe=False)
     except Book.DoesNotExist:
         return JsonResponse({'error': 'Book not found'}, status=404)
+    
+def get_reviews_all(request):
+    reviews = Review.objects.all()
+    reviews_list = [
+        {
+            'username': review.user.username,
+            'review_text': review.review_text
+        } for review in reviews
+    ]
+    return JsonResponse(reviews_list, safe=False)
 
 @login_required
 def get_like_status(request, id):
