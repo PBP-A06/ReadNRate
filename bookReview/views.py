@@ -106,7 +106,15 @@ def get_reviews(request, book_id):
     
 def get_reviews_all(request):
     reviews = Review.objects.all()
-    return HttpResponse(serializers.serialize("json", reviews), content_type="application/json") 
+    reviews_list = []
+
+    for review in reviews:
+        reviews_list.append({'book_id': review.book.pk,
+                             'book_cover': review.book.image_link,
+                             'username': review.user.username,
+                             'review_text': review.review_text})
+
+    return JsonResponse(reviews_list, safe=False)
 
 @login_required
 def get_like_status(request, id):
