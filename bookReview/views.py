@@ -110,6 +110,7 @@ def get_reviews_all(request):
 
     for review in reviews:
         reviews_list.append({'book_id': review.book.pk,
+                             'book_title': review.book.title,
                              'book_cover': review.book.image_link,
                              'username': review.user.username,
                              'review_text': review.review_text})
