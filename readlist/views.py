@@ -95,3 +95,9 @@ def toggle_like_readlist(request, id):
         has_liked = request.user in readlist.liked_by.all() if request.user.is_authenticated else False
 
         return JsonResponse({'status': 'success', 'total_likes': total_likes, 'has_liked': has_liked})
+    
+@csrf_exempt
+def show_readlist_flutter(request, pk):
+    readlist = Readlist.objects.filter(pk=pk)
+    books = readlist.books.all()
+    return HttpResponse(serializers.serialize("json", books), content_type="application/json") 
