@@ -9,6 +9,8 @@ from django.contrib.auth.models import User
 
 from authentication.forms import RegistrationForm
 
+from rest_framework.authtoken.models import Token
+
 @csrf_exempt
 def login(request):
     username = request.POST['username']
@@ -17,19 +19,19 @@ def login(request):
     if user is not None:
         if user.is_active:
             auth_login(request, user)
-            # Status login sukses.
+            token, _ = Token.objects.get_or_create(user=user)
             return JsonResponse({
                 "username": user.username,
                 "status": True,
-                "message": "Login sukses!"
-                # Tambahkan data lainnya jika ingin mengirim data ke Flutter.
+                "message": "Login sukses!",
+                "token": token.key  # Include the token in the response
             }, status=200)
         else:
             return JsonResponse({
                 "status": False,
                 "message": "Login gagal, akun dinonaktifkan."
             }, status=401)
-
+        
     else:
         return JsonResponse({
             "status": False,
