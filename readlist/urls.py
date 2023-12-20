@@ -11,6 +11,5 @@ urlpatterns = [
     path("get-readlists/", get_readlists, name="get_readlists"),
     path("get-books/", get_books, name="get_books"),
     path('toggle_like_readlist/<int:id>/', toggle_like_readlist, name='toggle_like_readlist'),
-    #  path('redirect/', redirect_to_other_app, name='redirect'),
-    # path('readlist_detail/<int:readlist_id>', readlist_detail, name='readlist_detail'),
+    path("readlist-flutter/<int:pk>/", show_readlist_flutter, name="show_readlist_flutter"),
 ]
