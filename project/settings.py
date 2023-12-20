@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     'readlist',
     'authentication',
     'corsheaders',
+    'rest_framework.authtoken',
 ]
 
 MIDDLEWARE = [
